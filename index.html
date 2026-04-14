@@ -148,47 +148,45 @@
 
 <script type="module">
     // Firebase Imports
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, doc, updateDoc, onSnapshot, query, where, orderBy, deleteDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, doc, updateDoc, onSnapshot, query, where, orderBy, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDRErh8H98za0QzYBziRMVfm5dMfAa9MDA",
-        authDomain: "my-money-manager-1dacb.firebaseapp.com",
-        projectId: "my-money-manager-1dacb",
-        storageBucket: "my-money-manager-1dacb.firebasestorage.app",
-        messagingSenderId: "472698368140",
-        appId: "1:472698368140:web:8efd3e38778610099d4ba9"
-    };
+const firebaseConfig = { 
+  apiKey: "AIzaSyDRErh8H98za0QzYBziRMVfm5dMfAa9MDA",
+  authDomain: "my-money-manager-1dacb.firebaseapp.com",
+  projectId: "my-money-manager-1dacb",
+  storageBucket: "my-money-manager-1dacb.firebasestorage.app",
+  messagingSenderId: "472698368140",
+  appId: "1:472698368140:web:8efd3e38778610099d4ba9"
+};
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-    // 2. Define Admin Account
-    const ADMIN_EMAIL = "your-email@gmail.com"; 
+// IMPORTANT: This "catches" the login after you come back from Google
+getRedirectResult(auth).catch((error) => {
+    console.error("Login error:", error);
+});
 
-    let user = null;
-    let allTransactions = [];
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    document.getElementById('splash').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadData();
+  } else {
+    document.getElementById('splash').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+  }
+});
 
-    // Auth State
-    onAuthStateChanged(auth, (u) => {
-        if (u) {
-            user = u;
-            document.getElementById('auth-screen').style.display = 'none';
-            document.getElementById('main-app').style.display = 'block';
-            initApp();
-        } else {
-            document.getElementById('auth-screen').style.display = 'flex';
-            document.getElementById('main-app').style.display = 'none';
-        }
-    });
+window.googleLogin = () => signInWithRedirect(auth, provider);
+window.logout = () => signOut(auth);
 
-    window.googleLogin = () => signInWithPopup(auth, provider);
-    window.logout = () => signOut(auth);
-    document.getElementById('btn-login').onclick = window.googleLogin;
-
+// Set the button click in JS to ensure it's bound correctly
+document.getElementById('btn-login').onclick = window.googleLogin;
     async function initApp() {
         const isAdmin = user.email === ADMIN_EMAIL;
         
