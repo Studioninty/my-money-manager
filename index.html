@@ -139,38 +139,66 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// ADMIN REQUIREMENT
+// ADMIN SETTING
 const ADMIN_EMAIL = "saqib77000@gmail.com"; 
 let currentUser = null;
-let txs = [];
-let currentType = 'income';
 
-const BANKS = ['MCB', 'Meezan', 'Faysal', 'Easypaisa', 'Nayapay', 'Sadapay', 'Cash'];
-const BOPT = BANKS.map(b => `<option value="${b}">${b}</option>`).join('');
+// --- FIXING THE LOGIN LOOP ---
 
-// --- AUTH HANDLERS ---
-getRedirectResult(auth).catch(e => console.error(e));
+// This function runs immediately on page load to catch the redirect result
+getRedirectResult(auth)
+    .then((result) => {
+        if (result?.user) {
+            console.log("Redirect login successful:", result.user.email);
+        }
+    })
+    .catch((error) => {
+        console.error("Redirect Error:", error);
+        alert("Login failed: " + error.message);
+    });
 
+// Listen for authentication state changes
 onAuthStateChanged(auth, (user) => {
+    const splash = document.getElementById('splash');
+    const appEl = document.getElementById('app');
+
     if (user) {
         currentUser = user;
-        document.getElementById('splash').style.display = 'none';
-        document.getElementById('app').style.display = 'block';
+        splash.style.display = 'none';
+        appEl.style.display = 'block';
         
         const isAdmin = user.email === ADMIN_EMAIL;
-        document.getElementById('user-pill').innerHTML = `<img src="${user.photoURL}"> <span>${user.displayName}</span>`;
-        if(isAdmin) document.getElementById('admin-tag').innerHTML = `<span class="badge" style="background: rgba(255,87,51,0.2); color: var(--primary)">Administrator</span>`;
+        
+        // Update User UI
+        document.getElementById('user-pill').innerHTML = `
+            <img src="${user.photoURL || ''}" style="width:28px; border-radius:50%"> 
+            <span>${user.displayName || user.email}</span>
+        `;
+        
+        if(isAdmin) {
+            document.getElementById('admin-tag').innerHTML = `<span class="badge" style="background: rgba(255,87,51,0.2); color: #ff5733">Administrator</span>`;
+        }
         
         loadData(isAdmin);
     } else {
-        document.getElementById('splash').style.display = 'flex';
+        currentUser = null;
+        splash.style.display = 'flex';
+        appEl.style.display = 'none';
         document.getElementById('auth-loading').style.display = 'none';
         document.getElementById('auth-ui').style.display = 'block';
     }
 });
 
-window.googleLogin = () => signInWithRedirect(auth, provider);
+window.googleLogin = () => {
+    document.getElementById('auth-ui').style.display = 'none';
+    document.getElementById('auth-loading').style.display = 'block';
+    document.getElementById('auth-loading').innerText = "Redirecting to Google...";
+    signInWithRedirect(auth, provider);
+};
+
 window.logout = () => signOut(auth);
+
+// Remaining data functions (loadData, saveEntry, renderUI) follow the same logic provided previously...
 
 // --- DATA LOGIC ---
 function loadData(isAdmin) {
