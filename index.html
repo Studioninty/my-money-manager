@@ -3,217 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Money Manager — Muhammad Saqib</title>
+<title>Money Manager Pro — SaaS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+:root {
+  --bg: #0f1117;
+  --card: #161b27;
+  --text: #e2e8f0;
+  --primary: #ff5733; /* Orange Accent from your design ref */
+  --transfer: #0ea5e9;
+  --border: #1e2535;
+  --green: #1D9E75;
+  --red: #ef4444;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
+body{font-family:'Inter', sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 .app{max-width:1200px;margin:0 auto;padding:1rem}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid #1e2535;flex-wrap:wrap;gap:6px}
-.logo{font-size:20px;font-weight:600;color:#e2e8f0}.logo span{color:#1D9E75}
-.sync-status{font-size:11px;padding:3px 8px;border-radius:6px;background:#1e2535;color:#94a3b8}
-.sync-status.synced{color:#1D9E75}.sync-status.syncing{color:#BA7517}.sync-status.error{color:#D85A30}
-.nav{display:flex;gap:3px;flex-wrap:wrap}
-.nb{padding:5px 11px;font-size:11px;border:1px solid #2a3347;border-radius:7px;background:transparent;color:#94a3b8;cursor:pointer;transition:all .15s}
-.nb:hover{background:#1e2535;color:#e2e8f0}
-.nb.active{background:#1D9E75;color:#fff;border-color:#1D9E75}
-.tab{display:none}.tab.active{display:block}
-.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:.875rem}
-.m{background:#161b27;border:1px solid #1e2535;border-radius:10px;padding:10px 13px}
-.ml{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
-.mv{font-size:18px;font-weight:600}.ms{font-size:10px;color:#64748b;margin-top:2px}
-.g{color:#1D9E75}.r{color:#ef4444}.b{color:#3b82f6}.a{color:#f59e0b}.p{color:#8b5cf6}
-.card{background:#161b27;border:1px solid #1e2535;border-radius:12px;padding:.875rem 1rem;margin-bottom:8px}
-.ct{font-size:12px;font-weight:500;color:#94a3b8;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
-.row{display:grid;gap:6px;padding:7px 0;border-bottom:1px solid #1e2535;font-size:11px;align-items:center}
-.row:last-child{border-bottom:none}
-.rh{font-size:10px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.04em}
-.tx5{grid-template-columns:65px 1fr 85px 65px 80px}
-.badge{display:inline-block;padding:2px 7px;border-radius:6px;font-size:10px;white-space:nowrap}
-.b-mcb{background:#1e3a5f;color:#60a5fa}.b-meezan{background:#064e3b;color:#34d399}.b-faysal{background:#451a03;color:#fbbf24}.b-easypaisa{background:#14532d;color:#86efac}.b-nayapay{background:#2e1065;color:#c4b5fd}.b-sadapay{background:#500724;color:#fda4af}.b-cash{background:#1e2535;color:#94a3b8}
-.in{color:#1D9E75;font-weight:600}.out{color:#ef4444;font-weight:600}
-.frow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;align-items:center}
-.frow select,.frow input[type=text]{font-size:11px;padding:5px 8px;border:1px solid #2a3347;border-radius:7px;background:#161b27;color:#e2e8f0;height:30px}
-.frow select:focus,.frow input:focus{outline:none;border-color:#1D9E75}
-.abtn{padding:5px 13px;font-size:11px;border-radius:7px;cursor:pointer;border:none;font-weight:500;white-space:nowrap;height:30px}
-.abtn.green{background:#1D9E75;color:#fff}.abtn.blue{background:#3b82f6;color:#fff}.abtn.amber{background:#f59e0b;color:#000}.abtn.purple{background:#8b5cf6;color:#fff}.abtn.red{background:#ef4444;color:#fff}.abtn.father{background:#92400e;color:#fff}.abtn.gray{background:#374151;color:#e2e8f0}
-.chart-wrap{position:relative;width:100%;height:220px;margin-top:6px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pb{margin-bottom:9px}
-.pl{display:flex;justify-content:space-between;font-size:11px;color:#94a3b8;margin-bottom:3px}
-.pbg{height:7px;background:#1e2535;border-radius:4px;overflow:hidden}
-.pf{height:100%;border-radius:4px;transition:width .4s}
-.empty{text-align:center;padding:2rem;color:#475569;font-size:12px}
-.bank-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:7px;margin-bottom:.875rem}
-.bcard{background:#161b27;border:1px solid #1e2535;border-radius:10px;padding:9px 12px}
-.bname{font-size:10px;color:#64748b;margin-bottom:3px}
-.bbal{font-size:15px;font-weight:600}
-.bbal.pos{color:#1D9E75}.bbal.neg{color:#ef4444}
-.bucket-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
-.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center}
+
+/* Topbar & Login */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding:1rem;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid var(--border);flex-wrap:wrap;gap:10px}
+.logo{font-size:20px;font-weight:700}.logo span{color:var(--primary)}
+.auth-user{display:flex;align-items:center;gap:10px;font-size:12px;color:#94a3b8}
+.auth-user img{width:28px;height:28px;border-radius:50%;border:1px solid var(--primary)}
+
+/* Navigation */
+.nav{display:flex;gap:5px;overflow-x:auto;padding-bottom:5px}
+.nb{padding:7px 14px;font-size:12px;border:1px solid var(--border);border-radius:8px;background:transparent;color:#94a3b8;cursor:pointer;white-space:nowrap}
+.nb.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* Metrics & Cards */
+.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:1.5rem}
+.m{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px}
+.ml{font-size:11px;color:#64748b;text-transform:uppercase;margin-bottom:5px}
+.mv{font-size:20px;font-weight:700}
+
+/* Transactions & Editing */
+.row{display:grid;gap:8px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px;align-items:center}
+.tx-grid{grid-template-columns:70px 1fr 90px 80px 90px 60px}
+.rh{font-weight:600;color:#475569;text-transform:uppercase;font-size:10px}
+.edit-btn{background:#1e2535;color:#3b82f6;border:none;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:10px}
+.edit-btn:hover{background:#2a3347}
+
+/* Modals */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:center;justify-content:center}
 .modal-ov.open{display:flex}
-.modal{background:#161b27;border:1px solid #2a3347;border-radius:14px;padding:1.25rem;width:380px;max-width:96vw;max-height:90vh;overflow-y:auto}
-.mh{font-size:15px;font-weight:600;margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;color:#e2e8f0}
-.mh button{background:transparent;border:none;font-size:18px;cursor:pointer;color:#64748b;line-height:1}
-.fg{margin-bottom:10px}
-.fg label{font-size:11px;color:#94a3b8;display:block;margin-bottom:3px}
-.fg input,.fg select,.fg textarea{width:100%;font-size:12px;padding:7px 9px;border:1px solid #2a3347;border-radius:7px;background:#0f1117;color:#e2e8f0}
-.fg input:focus,.fg select:focus{outline:none;border-color:#1D9E75}
-.fg textarea{height:55px;resize:none}
-.mbtns{display:flex;gap:7px;justify-content:flex-end;margin-top:12px}
-.mbtns button{padding:7px 16px;font-size:12px;border-radius:7px;cursor:pointer;font-weight:500}
-.bc{background:transparent;border:1px solid #2a3347;color:#94a3b8}
-.bs{background:#1D9E75;color:#fff;border:none}
-.section-hdr{font-size:11px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.06em;margin:12px 0 6px;padding-bottom:4px;border-bottom:1px solid #1e2535}
-.father-row{display:grid;grid-template-columns:65px 1fr 80px 80px 80px;gap:6px;padding:7px 0;border-bottom:1px solid #1e2535;font-size:11px;align-items:center}
-.father-row:last-child{border-bottom:none}
-.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;gap:12px}
-.spinner{width:40px;height:40px;border:3px solid #1e2535;border-top:3px solid #1D9E75;border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.toast{position:fixed;bottom:20px;right:20px;background:#1D9E75;color:#fff;padding:10px 18px;border-radius:8px;font-size:12px;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none}
-.toast.show{opacity:1}
-@media(max-width:640px){.two{grid-template-columns:1fr}.bucket-grid{grid-template-columns:repeat(2,1fr)}.tx5{grid-template-columns:55px 1fr 70px}}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;width:400px;max-width:95vw}
+.fg{margin-bottom:12px}
+.fg label{font-size:11px;color:#94a3b8;display:block;margin-bottom:4px}
+.fg input, .fg select{width:100%;padding:10px;background:#0f1117;border:1px solid var(--border);color:#fff;border-radius:8px;outline:none}
+
+/* Buttons */
+.abtn{padding:8px 16px;border-radius:8px;cursor:pointer;border:none;font-weight:600;font-size:12px}
+.green{background:var(--green);color:#fff}
+.transfer-btn{background:var(--transfer);color:#fff}
+.admin-label{font-size:9px;background:#ef4444;color:white;padding:1px 4px;border-radius:3px;margin-left:5px}
+
+@media(max-width:640px){
+    .tx-grid{grid-template-columns:60px 1fr 80px 50px}
+    .hide-mobile{display:none}
+}
 </style>
 </head>
 <body>
 
-<div class="toast" id="toast"></div>
-
-<div id="loading-screen" class="loading-screen">
-  <div class="spinner"></div>
-  <div style="color:#94a3b8;font-size:13px">Connecting to your database...</div>
+<div id="loading-screen" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px">
+    <div class="logo">My <span>Money</span> Manager</div>
+    <div id="auth-action">Loading...</div>
 </div>
 
 <div class="app" id="main-app" style="display:none">
   <div class="topbar">
     <div class="logo">My <span>Money</span> Manager</div>
-    <div id="sync-status" class="sync-status synced">● Synced</div>
     <div class="nav">
       <button class="nb active" onclick="ST('dashboard',this)">Dashboard</button>
-      <button class="nb" onclick="ST('income',this)">Income</button>
-      <button class="nb" onclick="ST('expenses',this)">Expenses</button>
-      <button class="nb" onclick="ST('savings',this)">Savings</button>
-      <button class="nb" onclick="ST('utilities',this)">Utilities</button>
-      <button class="nb" onclick="ST('taxfees',this)">Tax &amp; Fees</button>
-      <button class="nb" onclick="ST('investments',this)">Investments</button>
-      <button class="nb" onclick="ST('fathers',this)">Father's Bills</button>
       <button class="nb" onclick="ST('alltx',this)">All Transactions</button>
     </div>
+    <div id="user-info" class="auth-user"></div>
   </div>
 
-  <!-- DASHBOARD -->
   <div id="tab-dashboard" class="tab active">
-    <div class="frow">
-      <span style="font-size:11px;color:#64748b">Filter:</span>
-      <select id="d-mf" onchange="renderAll()"><option value="all">All months</option><option value="2026-01">January 2026</option><option value="2026-02">February 2026</option><option value="2026-03">March 2026</option><option value="2026-04">April 2026</option></select>
-      <div style="flex:1"></div>
-      <button class="abtn green" onclick="OM('income')">+ Income</button>
-      <button class="abtn blue" onclick="OM('expense')">+ Expense</button>
-      <button class="abtn purple" onclick="OM('savings')">+ Savings</button>
-      <button class="abtn amber" onclick="OM('investment')">+ Investment</button>
-      <button class="abtn red" onclick="OM('tax')">+ Tax/Fee</button>
-      <button class="abtn father" onclick="OM('father')">+ Father's Bill</button>
-      <button class="abtn gray" onclick="OM('cash')">+ Cash</button>
+    <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+        <button class="abtn green" onclick="OM('income')">+ Income</button>
+        <button class="abtn" style="background:#3b82f6;color:white" onclick="OM('expense')">+ Expense</button>
+        <button class="abtn transfer-btn" onclick="OM('transfer')">⇄ Transfer</button>
+        <button class="abtn" onclick="logout()" style="background:#374151;color:white">Logout</button>
     </div>
-    <div class="section-hdr">Your income summary</div>
-    <div id="d-inc-metrics" class="mg"></div>
-    <div class="section-hdr">Bank balances (auto-calculated)</div>
-    <div id="d-banks" class="bank-grid"></div>
-    <div class="section-hdr">Cash in hand</div>
-    <div class="card"><div class="ct"><span>Cash tracker</span></div><div id="d-cash"></div></div>
-    <div class="section-hdr">50 / 25 / 15 / 10 budget buckets</div>
-    <div id="d-buckets"></div>
-    <div class="section-hdr">Father's bills summary</div>
-    <div id="d-father-summary"></div>
-    <div class="section-hdr">Monthly charts</div>
-    <div class="two">
-      <div class="card"><div class="ct">Income vs expenses</div><div class="chart-wrap"><canvas id="c-d-ie" role="img" aria-label="Income vs expenses"></canvas></div></div>
-      <div class="card"><div class="ct">Expense breakdown</div><div class="chart-wrap"><canvas id="c-d-exp" role="img" aria-label="Expense breakdown"></canvas></div></div>
+
+    <div id="metrics" class="mg"></div>
+    
+    <div class="m">
+        <div class="ml">Recent Transactions</div>
+        <div class="row rh tx-grid"><span>Date</span><span>Desc</span><span class="hide-mobile">Cat</span><span>Bank</span><span>Amt</span><span>Action</span></div>
+        <div id="recent-list"></div>
     </div>
   </div>
 
-  <!-- INCOME -->
-  <div id="tab-income" class="tab">
-    <div class="frow"><span style="font-size:11px;color:#64748b">Filter:</span><select id="i-mf" onchange="renderIncome()"><option value="all">All months</option><option value="2026-01">January</option><option value="2026-02">February</option><option value="2026-03">March</option><option value="2026-04">April</option></select><div style="flex:1"></div><button class="abtn green" onclick="OM('income')">+ Add income</button></div>
-    <div id="i-metrics" class="mg"></div>
-    <div class="two"><div class="card"><div class="ct">Monthly income</div><div class="chart-wrap"><canvas id="c-i-mon" role="img" aria-label="Monthly income"></canvas></div></div><div class="card"><div class="ct">Upwork payments</div><div class="chart-wrap"><canvas id="c-i-upw" role="img" aria-label="Upwork payments"></canvas></div></div></div>
-    <div class="card" style="margin-top:8px"><div class="ct">All income transactions</div><div class="row rh tx5"><span>Date</span><span>Description</span><span>Source</span><span>Bank</span><span>Amount</span></div><div id="i-list"></div></div>
-  </div>
-
-  <!-- EXPENSES -->
-  <div id="tab-expenses" class="tab">
-    <div class="frow"><span style="font-size:11px;color:#64748b">Filter:</span><select id="e-mf" onchange="renderExpenses()"><option value="all">All months</option><option value="2026-01">January</option><option value="2026-02">February</option><option value="2026-03">March</option><option value="2026-04">April</option></select><select id="e-cf" onchange="renderExpenses()"><option value="">All categories</option><option>Home expense</option><option>Personal expense</option><option>Family expense</option><option>Grocery</option><option>Client expense</option><option>Food</option><option>Google Cloud</option></select><input type="text" id="e-sf" placeholder="Search..." oninput="renderExpenses()" style="flex:1;min-width:80px"><div style="flex:1"></div><button class="abtn blue" onclick="OM('expense')">+ Add expense</button></div>
-    <div id="e-metrics" class="mg"></div>
-    <div class="two"><div class="card"><div class="ct">Category breakdown</div><div class="chart-wrap" style="height:190px"><canvas id="c-e-donut" role="img" aria-label="Expense donut"></canvas></div></div><div class="card"><div class="ct">Monthly trend</div><div class="chart-wrap" style="height:190px"><canvas id="c-e-trend" role="img" aria-label="Expense trend"></canvas></div></div></div>
-    <div class="card" style="margin-top:8px"><div class="ct">Expense transactions</div><div class="row rh tx5"><span>Date</span><span>Description</span><span>Category</span><span>Bank</span><span>Amount</span></div><div id="e-list"></div></div>
-  </div>
-
-  <!-- SAVINGS -->
-  <div id="tab-savings" class="tab">
-    <div class="frow"><span style="font-size:11px;color:#64748b">Filter:</span><select id="s-mf" onchange="renderSavings()"><option value="all">All months</option><option value="2026-01">January</option><option value="2026-02">February</option><option value="2026-03">March</option><option value="2026-04">April</option></select><div style="flex:1"></div><button class="abtn purple" onclick="OM('savings')">+ Add savings</button></div>
-    <div id="s-metrics" class="mg"></div>
-    <div class="two"><div class="card"><div class="ct">Monthly savings</div><div class="chart-wrap"><canvas id="c-s-bar" role="img" aria-label="Monthly savings"></canvas></div></div><div class="card"><div class="ct">Budget rule 50/25/15/10</div><div id="s-budget" style="padding-top:6px"></div></div></div>
-    <div class="card" style="margin-top:8px"><div class="ct">All savings transfers</div><div class="row rh tx5"><span>Date</span><span>Description</span><span>From</span><span>To</span><span>Amount</span></div><div id="s-list"></div></div>
-  </div>
-
-  <!-- UTILITIES -->
-  <div id="tab-utilities" class="tab">
-    <div class="frow"><span style="font-size:11px;color:#64748b">Filter:</span><select id="u-mf" onchange="renderUtilities()"><option value="all">All months</option><option value="2026-01">January</option><option value="2026-02">February</option><option value="2026-03">March</option><option value="2026-04">April</option></select></div>
-    <div id="u-metrics" class="mg"></div>
-    <div class="card"><div class="ct">K-Electric — bills by meter</div><div id="ke-table"></div></div>
-    <div class="card" style="margin-top:8px"><div class="ct">SSGC gas — bills by connection</div><div id="ssgc-table"></div></div>
-    <div class="two" style="margin-top:8px">
-      <div class="card"><div class="ct">Utility trend</div><div class="chart-wrap" style="height:190px"><canvas id="c-u-trend" role="img" aria-label="Utility trend"></canvas></div></div>
-      <div class="card"><div class="ct">Your share vs father's share</div><div id="u-share" style="padding-top:6px"></div></div>
+  <div id="tab-alltx" class="tab" style="display:none">
+    <div class="m">
+        <div class="ml">Full History</div>
+        <div id="history-list"></div>
     </div>
-  </div>
-
-  <!-- TAX & FEES -->
-  <div id="tab-taxfees" class="tab">
-    <div class="frow"><span style="font-size:11px;color:#64748b">Filter:</span><select id="tf-mf" onchange="renderTaxFees()"><option value="all">All months</option><option value="2026-01">January</option><option value="2026-02">February</option><option value="2026-03">March</option><option value="2026-04">April</option></select><div style="flex:1"></div><button class="abtn red" onclick="OM('tax')">+ Add tax/fee</button></div>
-    <div id="t-metrics" class="mg"></div>
-    <div class="two"><div class="card"><div class="ct">Monthly tax</div><div class="chart-wrap" style="height:190px"><canvas id="c-t-tax" role="img" aria-label="Tax chart"></canvas></div></div><div class="card"><div class="ct">Monthly fees</div><div class="chart-wrap" style="height:190px"><canvas id="c-t-fee" role="img" aria-label="Fees chart"></canvas></div></div></div>
-    <div class="card" style="margin-top:8px"><div class="ct">Tax transactions</div><div class="row rh tx5"><span>Date</span><span>Description</span><span>Type</span><span>Bank</span><span>Amount</span></div><div id="t-list"></div></div>
-    <div class="card" style="margin-top:8px"><div class="ct">Bank fee transactions</div><div class="row rh tx5"><span>Date</span><span>Description</span><span>Type</span><span>Bank</span><span>Amount</span></div><div id="f-list"></div></div>
-  </div>
-
-  <!-- INVESTMENTS -->
-  <div id="tab-investments" class="tab">
-    <div class="frow"><span style="font-size:11px;color:#64748b">Filter:</span><select id="inv-mf" onchange="renderInvestments()"><option value="all">All months</option><option value="2026-01">January</option><option value="2026-02">February</option><option value="2026-03">March</option><option value="2026-04">April</option></select><div style="flex:1"></div><button class="abtn amber" onclick="OM('investment')">+ Add investment</button></div>
-    <div id="inv-metrics" class="mg"></div>
-    <div class="card"><div class="ct">Investment transactions</div><div class="row rh tx5"><span>Date</span><span>Description</span><span>Category</span><span>Bank</span><span>Amount</span></div><div id="inv-list"></div></div>
-    <div class="card" style="margin-top:8px"><div class="ct">Google Cloud subscription (PKR 419/month)</div><div class="row rh tx5"><span>Date</span><span>Description</span><span>Category</span><span>Bank</span><span>Amount</span></div><div id="gc-list"></div></div>
-  </div>
-
-  <!-- FATHER'S BILLS -->
-  <div id="tab-fathers" class="tab">
-    <div class="frow"><span style="font-size:11px;color:#64748b">Filter:</span><select id="fa-mf" onchange="renderFathers()"><option value="all">All months</option><option value="2026-01">January</option><option value="2026-02">February</option><option value="2026-03">March</option><option value="2026-04">April</option></select><div style="flex:1"></div><button class="abtn father" onclick="OM('father')">+ Add father's bill</button></div>
-    <div id="fa-metrics" class="mg"></div>
-    <div class="card"><div class="ct">Bill payments — father's share vs your share</div><div class="father-row rh"><span>Date</span><span>Description</span><span>Total bill</span><span>Father paid</span><span>You paid</span></div><div id="fa-list"></div></div>
-    <div class="card" style="margin-top:8px"><div class="ct">Monthly contribution chart</div><div class="chart-wrap" style="height:210px"><canvas id="c-fa" role="img" aria-label="Father bills chart"></canvas></div></div>
-  </div>
-
-  <!-- ALL TRANSACTIONS -->
-  <div id="tab-alltx" class="tab">
-    <div class="frow"><span style="font-size:11px;color:#64748b">Filter:</span><select id="at-mf" onchange="renderAllTx()"><option value="all">All months</option><option value="2026-01">January</option><option value="2026-02">February</option><option value="2026-03">March</option><option value="2026-04">April</option></select><select id="at-acc" onchange="renderAllTx()"><option value="">All accounts</option><option>MCB</option><option>Meezan</option><option>Faysal</option><option>Easypaisa</option><option>Cash</option></select><select id="at-tp" onchange="renderAllTx()"><option value="">All types</option><option value="in">In</option><option value="out">Out</option></select><select id="at-cat" onchange="renderAllTx()"><option value="">All categories</option><option>Salary</option><option>Incentive</option><option>Upwork</option><option>Loan repayment</option><option>Home expense</option><option>Personal expense</option><option>Family expense</option><option>Grocery</option><option>Client expense</option><option>Utility</option><option>Food</option><option>Savings</option><option>Investment</option><option>Tax</option><option>Bank fee</option><option>Google Cloud</option><option>Cash in</option><option>Cash out</option></select><input type="text" id="at-sf" placeholder="Search..." oninput="renderAllTx()" style="flex:1;min-width:80px"></div>
-    <div id="at-summary" style="font-size:11px;color:#64748b;margin-bottom:6px;text-align:right"></div>
-    <div class="card" style="padding:.5rem .875rem"><div class="row rh tx5"><span>Date</span><span>Description</span><span>Category</span><span>Bank</span><span>Amount</span></div><div id="at-list"></div></div>
   </div>
 </div>
 
-<!-- MODAL -->
 <div class="modal-ov" id="modal">
   <div class="modal">
-    <div class="mh"><span id="m-title">Add</span><button onclick="CM()">✕</button></div>
+    <h3 id="m-title" style="margin-bottom:15px">Action</h3>
+    <input type="hidden" id="m-edit-id">
     <div id="m-body"></div>
-    <div class="mbtns"><button class="bc" onclick="CM()">Cancel</button><button class="bs" onclick="saveEntry()">Save</button></div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:15px">
+        <button onclick="CM()" style="background:transparent;color:#94a3b8;border:none;cursor:pointer">Cancel</button>
+        <button class="abtn green" onclick="saveEntry()">Save Entry</button>
+    </div>
   </div>
 </div>
 
-<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, setDoc, doc, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+import { getFirestore, collection, addDoc, doc, updateDoc, onSnapshot, query, where, orderBy, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDRErh8H98za0QzYBziRMVfm5dMfAa9MDA",
@@ -221,531 +129,160 @@ const firebaseConfig = {
   projectId: "my-money-manager-1dacb",
   storageBucket: "my-money-manager-1dacb.firebasestorage.app",
   messagingSenderId: "472698368140",
-  appId: "1:472698368140:web:8efd3e38778610099d4ba9",
-  measurementId: "G-ECHC8D8PXD"
+  appId: "1:472698368140:web:8efd3e38778610099d4ba9"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-window.db = db;
-window.fsCollection = collection;
-window.fsDocs = getDocs;
-window.fsAddDoc = addDoc;
-window.fsSetDoc = setDoc;
-window.fsDoc = doc;
-window.fsOnSnapshot = onSnapshot;
-window.fsDeleteDoc = deleteDoc;
+const ADMIN_EMAIL = "saqib77000@gmail.com"; // Set your email here
+let currentUser = null;
+let txs = [];
+let currentModal = '';
 
-// Load Chart.js
-const script = document.createElement('script');
-script.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js';
-script.onload = () => window.chartLoaded = true;
-document.head.appendChild(script);
+const BANKS = ['MCB','Meezan','Faysal','Easypaisa','Nayapay','Cash'];
+const BOPT = BANKS.map(b => `<option value="${b}">${b}</option>`).join('');
 
-window.firebaseReady = true;
-initApp();
-</script>
+// Requirement 2: Auth Listener
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    currentUser = user;
+    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById('main-app').style.display = 'block';
+    document.getElementById('user-info').innerHTML = `<img src="${user.photoURL}"> ${user.displayName} ${user.email === ADMIN_EMAIL ? '<span class="admin-badge">ADMIN</span>' : ''}`;
+    loadData();
+  } else {
+    document.getElementById('loading-screen').style.display = 'flex';
+    document.getElementById('main-app').style.display = 'none';
+    document.getElementById('auth-action').innerHTML = `<button class="abtn green" onclick="window.login()">Login with Google</button>`;
+  }
+});
 
-<script>
-const MONTHS=['2026-01','2026-02','2026-03','2026-04'];
-const MLbl={'2026-01':'Jan','2026-02':'Feb','2026-03':'Mar','2026-04':'Apr'};
-const BANKS=['MCB','Meezan','Faysal','Easypaisa','Nayapay','Sadapay','Cash'];
-const EXP_CATS=['Home expense','Personal expense','Family expense','Grocery','Client expense','Food','Google Cloud'];
-const MY_INC_CATS=['Salary','Incentive','Upwork','Loan repayment'];
+window.login = () => signInWithPopup(auth, provider);
+window.logout = () => signOut(auth);
 
-let txs=[], fatherBills=[], CI={}, currentModal='';
+// Load Multi-user Data
+function loadData() {
+  const q = (currentUser.email === ADMIN_EMAIL)
+    ? query(collection(db, 'transactions'), orderBy('date', 'desc'))
+    : query(collection(db, 'transactions'), where('uid', '==', currentUser.uid), orderBy('date', 'desc'));
 
-const SEED_TXS=[
-  {id:'s1',date:'2026-01-07',desc:'CMD Transfer — Salary',account:'MCB',type:'in',amount:143600,cat:'Salary',from:'Office CMD'},
-  {id:'s2',date:'2026-01-07',desc:'Payment Escrow Inc — Upwork $90',account:'Meezan',type:'in',amount:25220,cat:'Upwork',from:'Payment Escrow Inc'},
-  {id:'s3',date:'2026-01-31',desc:'Muhammad Ramzan — loan repayment',account:'Meezan',type:'in',amount:10000,cat:'Loan repayment',from:'Muhammad Ramzan'},
-  {id:'s4',date:'2026-02-06',desc:'CMD Transfer — Salary',account:'MCB',type:'in',amount:143600,cat:'Salary',from:'Office CMD'},
-  {id:'s5',date:'2026-02-19',desc:'Advanceful LLC — Upwork',account:'Meezan',type:'in',amount:19231,cat:'Upwork',from:'Advanceful LLC'},
-  {id:'s6',date:'2026-02-25',desc:'CMD Transfer — Office Incentive',account:'MCB',type:'in',amount:15059,cat:'Incentive',from:'Office CMD'},
-  {id:'s7',date:'2026-03-06',desc:'CMD Transfer — Salary',account:'MCB',type:'in',amount:143600,cat:'Salary',from:'Office CMD'},
-  {id:'s8',date:'2026-03-19',desc:'Payment Escrow Inc — Upwork',account:'Meezan',type:'in',amount:87920,cat:'Upwork',from:'Payment Escrow Inc'},
-  {id:'s9',date:'2026-03-25',desc:'Payment Escrow Inc — Upwork',account:'Meezan',type:'in',amount:22586,cat:'Upwork',from:'Payment Escrow Inc'},
-  {id:'s10',date:'2026-03-25',desc:'Payment Escrow Inc — Upwork',account:'Meezan',type:'in',amount:13175,cat:'Upwork',from:'Payment Escrow Inc'},
-  {id:'s11',date:'2026-03-30',desc:'Payment Escrow Inc — Upwork',account:'Meezan',type:'in',amount:33633,cat:'Upwork',from:'Payment Escrow Inc'},
-  {id:'s12',date:'2026-04-07',desc:'CMD Transfer — Salary',account:'MCB',type:'in',amount:143600,cat:'Salary',from:'Office CMD'},
-  {id:'s13',date:'2026-04-11',desc:'Muhammad Ijaz — repayment',account:'Meezan',type:'in',amount:5000,cat:'Loan repayment',from:'Muhammad Ijaz'},
-  {id:'e1',date:'2026-01-07',desc:'ATM withdrawal — home',account:'Meezan',type:'out',amount:1000,cat:'Home expense',mode:'ATM'},
-  {id:'e2',date:'2026-01-08',desc:'ATM withdrawal — home',account:'Meezan',type:'out',amount:20000,cat:'Home expense',mode:'ATM'},
-  {id:'e3',date:'2026-01-10',desc:'Imtiaz Stores DHA — monthly grocery',account:'Meezan',type:'out',amount:37281,cat:'Grocery',mode:'Card'},
-  {id:'e4',date:'2026-01-12',desc:'Akif Khan — home expense',account:'Meezan',type:'out',amount:15500,cat:'Home expense',mode:'Transfer'},
-  {id:'e5',date:'2026-01-12',desc:'Raja Baba General Store — home',account:'Meezan',type:'out',amount:2000,cat:'Home expense',mode:'Transfer'},
-  {id:'e6',date:'2026-01-13',desc:'ATM withdrawal — home',account:'Meezan',type:'out',amount:10000,cat:'Home expense',mode:'ATM'},
-  {id:'e7',date:'2026-01-18',desc:'ATM withdrawal — home',account:'MCB',type:'out',amount:5000,cat:'Home expense',mode:'ATM'},
-  {id:'e8',date:'2026-01-21',desc:'ATM withdrawal — home',account:'Meezan',type:'out',amount:5000,cat:'Home expense',mode:'ATM'},
-  {id:'e9',date:'2026-01-23',desc:'Wajahat Zahid — personal',account:'Meezan',type:'out',amount:6500,cat:'Personal expense',mode:'Transfer'},
-  {id:'e10',date:'2026-01-26',desc:'Muhammad Ayaz + Rahim — personal',account:'Easypaisa',type:'out',amount:6000,cat:'Personal expense',mode:'Transfer'},
-  {id:'e11',date:'2026-01-29',desc:'ATM withdrawal — home',account:'MCB',type:'out',amount:5000,cat:'Home expense',mode:'ATM'},
-  {id:'e12',date:'2026-02-02',desc:'ATM withdrawal — home',account:'MCB',type:'out',amount:2000,cat:'Home expense',mode:'ATM'},
-  {id:'e13',date:'2026-02-07',desc:'ATM + POS — home expenses',account:'MCB',type:'out',amount:37496,cat:'Home expense',mode:'Card'},
-  {id:'e14',date:'2026-02-07',desc:'ATM withdrawal — home',account:'Meezan',type:'out',amount:4500,cat:'Home expense',mode:'ATM'},
-  {id:'e15',date:'2026-02-09',desc:'Muhammad Danish — home (cash)',account:'Meezan',type:'out',amount:35500,cat:'Home expense',mode:'Transfer'},
-  {id:'e16',date:'2026-02-09',desc:'Haroon Rasheed — client expense',account:'Meezan',type:'out',amount:6000,cat:'Client expense',mode:'Transfer'},
-  {id:'e17',date:'2026-02-09',desc:'Nasir Khan — internet bill',account:'Meezan',type:'out',amount:2000,cat:'Client expense',mode:'Transfer'},
-  {id:'e18',date:'2026-02-21',desc:'Al Rahim Exclusive FA — personal shopping',account:'Meezan',type:'out',amount:22450,cat:'Personal expense',mode:'Card'},
-  {id:'e19',date:'2026-02-23',desc:'ATM withdrawal — home',account:'Meezan',type:'out',amount:8500,cat:'Home expense',mode:'ATM'},
-  {id:'e20',date:'2026-02-26',desc:'Personal cash',account:'Meezan',type:'out',amount:7500,cat:'Personal expense',mode:'Cash'},
-  {id:'e21',date:'2026-02-28',desc:'ATM withdrawal — home',account:'Meezan',type:'out',amount:5000,cat:'Home expense',mode:'ATM'},
-  {id:'e22',date:'2026-03-07',desc:'Touqeer Nasir — family Eidi (sister)',account:'Meezan',type:'out',amount:10000,cat:'Family expense',mode:'Transfer'},
-  {id:'e23',date:'2026-03-09',desc:'Imtiaz Stores DHA — monthly grocery',account:'Meezan',type:'out',amount:36433,cat:'Grocery',mode:'Card'},
-  {id:'e24',date:'2026-03-09',desc:'Chase Value + Junaid Comm — home',account:'Meezan',type:'out',amount:15100,cat:'Home expense',mode:'Card'},
-  {id:'e25',date:'2026-03-11',desc:'ATM withdrawal — home',account:'Meezan',type:'out',amount:7500,cat:'Home expense',mode:'ATM'},
-  {id:'e26',date:'2026-03-13',desc:'ATM withdrawal — home',account:'Meezan',type:'out',amount:9000,cat:'Home expense',mode:'ATM'},
-  {id:'e27',date:'2026-03-16',desc:'Touqeer Nasir — family Eidi (sister)',account:'Meezan',type:'out',amount:5000,cat:'Family expense',mode:'Transfer'},
-  {id:'e28',date:'2026-03-16',desc:'Imtiaz Stores DHA x3 — grocery',account:'Meezan',type:'out',amount:9036,cat:'Grocery',mode:'Card'},
-  {id:'e29',date:'2026-03-17',desc:'ATM withdrawal — home',account:'Meezan',type:'out',amount:6500,cat:'Home expense',mode:'ATM'},
-  {id:'e30',date:'2026-03-17',desc:'Syed Mursaleen — client project',account:'Faysal',type:'out',amount:1100,cat:'Client expense',mode:'Transfer'},
-  {id:'e31',date:'2026-03-19',desc:'Syed Mursaleen — client project',account:'Meezan',type:'out',amount:21000,cat:'Client expense',mode:'Transfer'},
-  {id:'e32',date:'2026-03-21',desc:'ATM withdrawal — home',account:'Meezan',type:'out',amount:20000,cat:'Home expense',mode:'ATM'},
-  {id:'e33',date:'2026-03-21',desc:'Farhan Ullah — personal (suits)',account:'Meezan',type:'out',amount:3000,cat:'Personal expense',mode:'Transfer'},
-  {id:'e34',date:'2026-03-24',desc:'KFC Shahbaz Phase 6',account:'Meezan',type:'out',amount:2811,cat:'Food',mode:'Card'},
-  {id:'e35',date:'2026-03-28',desc:'KFC Dolman Mall',account:'Meezan',type:'out',amount:2351,cat:'Food',mode:'Card'},
-  {id:'e36',date:'2026-03-28',desc:'Greeno Juice Bars',account:'Meezan',type:'out',amount:1380,cat:'Food',mode:'Card'},
-  {id:'e37',date:'2026-04-06',desc:'ATM withdrawal — home',account:'Meezan',type:'out',amount:10000,cat:'Home expense',mode:'ATM'},
-  {id:'e38',date:'2026-04-06',desc:'KFC Shahrah-e-Faisal',account:'Meezan',type:'out',amount:1271,cat:'Food',mode:'Card'},
-  {id:'e39',date:'2026-04-06',desc:'Raja Baba General Store — home',account:'Meezan',type:'out',amount:2000,cat:'Home expense',mode:'Transfer'},
-  {id:'e40',date:'2026-04-08',desc:'Imtiaz grocery — DOM POS',account:'MCB',type:'out',amount:36598,cat:'Grocery',mode:'Card'},
-  {id:'sav1',date:'2026-01-07',desc:'Tanzeela Asaan A/C',account:'Meezan',type:'out',amount:30000,cat:'Savings',savFrom:'Meezan',savTo:'Tanzeela Asaan'},
-  {id:'sav2',date:'2026-01-31',desc:'Tanzeela Asaan A/C',account:'Meezan',type:'out',amount:7000,cat:'Savings',savFrom:'Meezan',savTo:'Tanzeela Asaan'},
-  {id:'sav3',date:'2026-03-21',desc:'Tanzeela Asaan A/C',account:'Meezan',type:'out',amount:60000,cat:'Savings',savFrom:'Meezan',savTo:'Tanzeela Asaan'},
-  {id:'sav4',date:'2026-04-09',desc:'Tanzeela Asaan A/C',account:'Meezan',type:'out',amount:30000,cat:'Savings',savFrom:'Meezan',savTo:'Tanzeela Asaan'},
-  {id:'sav5',date:'2026-04-13',desc:'Tanzeela Asaan A/C',account:'Meezan',type:'out',amount:5500,cat:'Savings',savFrom:'Meezan',savTo:'Tanzeela Asaan'},
-  {id:'u1',date:'2026-01-06',desc:'SSGC 4184530000',account:'Faysal',type:'out',amount:1850,cat:'Utility'},
-  {id:'u2',date:'2026-01-06',desc:'SSGC 5722434767',account:'Faysal',type:'out',amount:5960,cat:'Utility'},
-  {id:'u3',date:'2026-01-06',desc:'SSGC 8948017893',account:'Faysal',type:'out',amount:1720,cat:'Utility'},
-  {id:'u4',date:'2026-01-06',desc:'SSGC 0708266647',account:'Faysal',type:'out',amount:1610,cat:'Utility'},
-  {id:'u5',date:'2026-01-06',desc:'K-Electric 0785097',account:'Faysal',type:'out',amount:4522,cat:'Utility'},
-  {id:'u6',date:'2026-01-06',desc:'K-Electric 0785510',account:'Faysal',type:'out',amount:2498,cat:'Utility'},
-  {id:'u7',date:'2026-01-06',desc:'K-Electric 0788188',account:'Faysal',type:'out',amount:4880,cat:'Utility'},
-  {id:'u8',date:'2026-01-06',desc:'K-Electric 0785790',account:'Faysal',type:'out',amount:1925,cat:'Utility'},
-  {id:'u9',date:'2026-01-06',desc:'K-Electric 0785219',account:'Faysal',type:'out',amount:2113,cat:'Utility'},
-  {id:'u10',date:'2026-01-06',desc:'K-Electric 0045340951',account:'Faysal',type:'out',amount:4300,cat:'Utility'},
-  {id:'u11',date:'2026-01-06',desc:'K-Electric 0045340943',account:'Faysal',type:'out',amount:2232,cat:'Utility'},
-  {id:'u12',date:'2026-01-07',desc:'Zong Prepaid',account:'Meezan',type:'out',amount:800,cat:'Utility'},
-  {id:'u13',date:'2026-01-23',desc:'K-Electric 0001585426',account:'Faysal',type:'out',amount:5458,cat:'Utility'},
-  {id:'u14',date:'2026-01-23',desc:'K-Electric 0001585272',account:'Faysal',type:'out',amount:1028,cat:'Utility'},
-  {id:'u15',date:'2026-01-23',desc:'K-Electric 0001585124',account:'Faysal',type:'out',amount:4422,cat:'Utility'},
-  {id:'u16',date:'2026-01-23',desc:'K-Electric 0001585582',account:'Faysal',type:'out',amount:1048,cat:'Utility'},
-  {id:'u17',date:'2026-01-31',desc:'SSGC 1456130000',account:'Faysal',type:'out',amount:1660,cat:'Utility'},
-  {id:'u18',date:'2026-01-31',desc:'SSGC 0708266647',account:'Faysal',type:'out',amount:950,cat:'Utility'},
-  {id:'u19',date:'2026-01-31',desc:'SSGC 5722434767',account:'Faysal',type:'out',amount:1770,cat:'Utility'},
-  {id:'u20',date:'2026-01-31',desc:'SSGC 8948017893',account:'Faysal',type:'out',amount:1500,cat:'Utility'},
-  {id:'u21',date:'2026-01-31',desc:'SSGC 4184530000',account:'Faysal',type:'out',amount:1750,cat:'Utility'},
-  {id:'u22',date:'2026-02-09',desc:'K-Electric 0785097',account:'Faysal',type:'out',amount:5043,cat:'Utility'},
-  {id:'u23',date:'2026-02-09',desc:'K-Electric 0785510',account:'Faysal',type:'out',amount:1185,cat:'Utility'},
-  {id:'u24',date:'2026-02-09',desc:'K-Electric 0788188',account:'Faysal',type:'out',amount:4914,cat:'Utility'},
-  {id:'u25',date:'2026-02-09',desc:'K-Electric 0785790',account:'Faysal',type:'out',amount:2433,cat:'Utility'},
-  {id:'u26',date:'2026-02-09',desc:'K-Electric 0785219',account:'Faysal',type:'out',amount:2300,cat:'Utility'},
-  {id:'u27',date:'2026-02-09',desc:'K-Electric 0045340951',account:'Faysal',type:'out',amount:472,cat:'Utility'},
-  {id:'u28',date:'2026-02-09',desc:'K-Electric 0045340943',account:'Faysal',type:'out',amount:2188,cat:'Utility'},
-  {id:'u29',date:'2026-02-09',desc:'Zong Prepaid',account:'Meezan',type:'out',amount:1300,cat:'Utility'},
-  {id:'u30',date:'2026-02-24',desc:'K-Electric 0001585426',account:'Faysal',type:'out',amount:6095,cat:'Utility'},
-  {id:'u31',date:'2026-02-24',desc:'K-Electric 0001585272',account:'Faysal',type:'out',amount:768,cat:'Utility'},
-  {id:'u32',date:'2026-02-24',desc:'K-Electric 0001585124',account:'Faysal',type:'out',amount:4550,cat:'Utility'},
-  {id:'u33',date:'2026-02-24',desc:'K-Electric 0001585582',account:'Faysal',type:'out',amount:1201,cat:'Utility'},
-  {id:'u34',date:'2026-03-03',desc:'Zong Prepaid',account:'Meezan',type:'out',amount:850,cat:'Utility'},
-  {id:'u35',date:'2026-03-06',desc:'SSGC 0708266647',account:'Faysal',type:'out',amount:1050,cat:'Utility'},
-  {id:'u36',date:'2026-03-06',desc:'SSGC 5722434767',account:'Faysal',type:'out',amount:1860,cat:'Utility'},
-  {id:'u37',date:'2026-03-06',desc:'SSGC 8948017893',account:'Faysal',type:'out',amount:1340,cat:'Utility'},
-  {id:'u38',date:'2026-03-06',desc:'SSGC 4184530000',account:'Faysal',type:'out',amount:1750,cat:'Utility'},
-  {id:'u39',date:'2026-03-06',desc:'Jazz Bundle',account:'Easypaisa',type:'out',amount:230,cat:'Utility'},
-  {id:'u40',date:'2026-03-11',desc:'K-Electric 0785097',account:'Faysal',type:'out',amount:6742,cat:'Utility'},
-  {id:'u41',date:'2026-03-11',desc:'K-Electric 0788188',account:'Faysal',type:'out',amount:5884,cat:'Utility'},
-  {id:'u42',date:'2026-03-11',desc:'K-Electric 0785510',account:'Faysal',type:'out',amount:4429,cat:'Utility'},
-  {id:'u43',date:'2026-03-11',desc:'K-Electric 0785790',account:'Faysal',type:'out',amount:2786,cat:'Utility'},
-  {id:'u44',date:'2026-03-11',desc:'K-Electric 0785219',account:'Faysal',type:'out',amount:4419,cat:'Utility'},
-  {id:'u45',date:'2026-03-11',desc:'K-Electric 0045340951',account:'Faysal',type:'out',amount:1160,cat:'Utility'},
-  {id:'u46',date:'2026-03-11',desc:'K-Electric 0045340943',account:'Faysal',type:'out',amount:1779,cat:'Utility'},
-  {id:'u47',date:'2026-03-25',desc:'K-Electric 0001585426',account:'Faysal',type:'out',amount:6148,cat:'Utility'},
-  {id:'u48',date:'2026-03-25',desc:'K-Electric 0001585272',account:'Faysal',type:'out',amount:2010,cat:'Utility'},
-  {id:'u49',date:'2026-03-25',desc:'K-Electric 0001585582',account:'Faysal',type:'out',amount:2283,cat:'Utility'},
-  {id:'u50',date:'2026-03-25',desc:'K-Electric 0001585124',account:'Faysal',type:'out',amount:3706,cat:'Utility'},
-  {id:'u51',date:'2026-04-06',desc:'SSGC 0708266647',account:'Faysal',type:'out',amount:1430,cat:'Utility'},
-  {id:'u52',date:'2026-04-06',desc:'SSGC 5722434767',account:'Faysal',type:'out',amount:1900,cat:'Utility'},
-  {id:'u53',date:'2026-04-06',desc:'SSGC 8948017893',account:'Faysal',type:'out',amount:1440,cat:'Utility'},
-  {id:'u54',date:'2026-04-06',desc:'SSGC 4184530000',account:'Faysal',type:'out',amount:1980,cat:'Utility'},
-  {id:'u55',date:'2026-04-06',desc:'SSGC 1456130000',account:'Faysal',type:'out',amount:1340,cat:'Utility'},
-  {id:'u56',date:'2026-04-08',desc:'K-Electric 0785097',account:'Faysal',type:'out',amount:11872,cat:'Utility'},
-  {id:'u57',date:'2026-04-08',desc:'K-Electric 0785510',account:'Faysal',type:'out',amount:2811,cat:'Utility'},
-  {id:'u58',date:'2026-04-08',desc:'K-Electric 0788188',account:'Faysal',type:'out',amount:7793,cat:'Utility'},
-  {id:'u59',date:'2026-04-08',desc:'K-Electric 0785790',account:'Faysal',type:'out',amount:4818,cat:'Utility'},
-  {id:'u60',date:'2026-04-08',desc:'K-Electric 0785219',account:'Faysal',type:'out',amount:7617,cat:'Utility'},
-  {id:'u61',date:'2026-04-08',desc:'K-Electric 0045340951',account:'Faysal',type:'out',amount:2646,cat:'Utility'},
-  {id:'u62',date:'2026-04-08',desc:'K-Electric 0045340943',account:'Faysal',type:'out',amount:3635,cat:'Utility'},
-  {id:'t1',date:'2026-01-13',desc:'Advance Tax Section 236Y',account:'MCB',type:'out',amount:41.9,cat:'Tax',taxType:'Advance 236Y'},
-  {id:'t2',date:'2026-01-13',desc:'Federal Excise Duty',account:'MCB',type:'out',amount:15,cat:'Tax',taxType:'FED'},
-  {id:'t3',date:'2026-01-17',desc:'Federal Excise Duty',account:'MCB',type:'out',amount:37.5,cat:'Tax',taxType:'FED'},
-  {id:'t4',date:'2026-02-13',desc:'Advance Tax Section 236Y',account:'MCB',type:'out',amount:41.9,cat:'Tax',taxType:'Advance 236Y'},
-  {id:'t5',date:'2026-02-13',desc:'Federal Excise Duty',account:'MCB',type:'out',amount:15,cat:'Tax',taxType:'FED'},
-  {id:'t6',date:'2026-02-17',desc:'Federal Excise Duty',account:'MCB',type:'out',amount:37.5,cat:'Tax',taxType:'FED'},
-  {id:'t7',date:'2026-03-13',desc:'Advance Tax Section 236Y',account:'MCB',type:'out',amount:41.9,cat:'Tax',taxType:'Advance 236Y'},
-  {id:'t8',date:'2026-03-13',desc:'Federal Excise Duty',account:'MCB',type:'out',amount:15,cat:'Tax',taxType:'FED'},
-  {id:'t9',date:'2026-03-17',desc:'Federal Excise Duty',account:'MCB',type:'out',amount:37.5,cat:'Tax',taxType:'FED'},
-  {id:'t10',date:'2026-04-13',desc:'Advance Tax Section 236Y',account:'MCB',type:'out',amount:41.9,cat:'Tax',taxType:'Advance 236Y'},
-  {id:'t11',date:'2026-04-13',desc:'Federal Excise Duty',account:'MCB',type:'out',amount:15,cat:'Tax',taxType:'FED'},
-  {id:'f1',date:'2026-01-13',desc:'POS Purchase Charges Intl',account:'MCB',type:'out',amount:100,cat:'Bank fee',feeType:'POS charge'},
-  {id:'f2',date:'2026-01-17',desc:'SMS Alert Fee',account:'MCB',type:'out',amount:250,cat:'Bank fee',feeType:'SMS fee'},
-  {id:'f3',date:'2026-02-13',desc:'POS Purchase Charges Intl',account:'MCB',type:'out',amount:100,cat:'Bank fee',feeType:'POS charge'},
-  {id:'f4',date:'2026-02-17',desc:'SMS Alert Fee',account:'MCB',type:'out',amount:250,cat:'Bank fee',feeType:'SMS fee'},
-  {id:'f5',date:'2026-03-13',desc:'POS Purchase Charges Intl',account:'MCB',type:'out',amount:100,cat:'Bank fee',feeType:'POS charge'},
-  {id:'f6',date:'2026-03-17',desc:'SMS Alert Fee',account:'MCB',type:'out',amount:250,cat:'Bank fee',feeType:'SMS fee'},
-  {id:'f7',date:'2026-04-13',desc:'POS Purchase Charges Intl',account:'MCB',type:'out',amount:100,cat:'Bank fee',feeType:'POS charge'},
-  {id:'gc1',date:'2026-01-13',desc:'Google Cloud subscription',account:'MCB',type:'out',amount:419,cat:'Google Cloud'},
-  {id:'gc2',date:'2026-02-13',desc:'Google Cloud subscription',account:'MCB',type:'out',amount:419,cat:'Google Cloud'},
-  {id:'gc3',date:'2026-03-13',desc:'Google Cloud subscription',account:'MCB',type:'out',amount:419,cat:'Google Cloud'},
-  {id:'gc4',date:'2026-04-13',desc:'Google Cloud subscription',account:'MCB',type:'out',amount:419,cat:'Google Cloud'},
-];
-
-const SEED_FATHER=[
-  {id:'fb1',date:'2026-01-06',desc:'Jan electricity batch 1',totalBill:28282,fatherPaid:20000,account:'Faysal'},
-  {id:'fb2',date:'2026-01-23',desc:'Jan electricity batch 2',totalBill:12956,fatherPaid:10000,account:'Faysal'},
-  {id:'fb3',date:'2026-01-31',desc:'Jan gas bills',totalBill:7630,fatherPaid:6000,account:'Faysal'},
-  {id:'fb4',date:'2026-02-09',desc:'Feb electricity bills',totalBill:18535,fatherPaid:15000,account:'Faysal'},
-  {id:'fb5',date:'2026-02-24',desc:'Feb electricity batch 2',totalBill:12614,fatherPaid:10000,account:'Faysal'},
-  {id:'fb6',date:'2026-03-06',desc:'Mar gas bills',totalBill:6000,fatherPaid:5000,account:'Faysal'},
-  {id:'fb7',date:'2026-03-11',desc:'Mar electricity bills',totalBill:26199,fatherPaid:20000,account:'Faysal'},
-  {id:'fb8',date:'2026-03-25',desc:'Mar electricity batch 2',totalBill:14147,fatherPaid:12000,account:'Faysal'},
-  {id:'fb9',date:'2026-04-06',desc:'Apr gas bills',totalBill:8090,fatherPaid:7000,account:'Faysal'},
-  {id:'fb10',date:'2026-04-08',desc:'Apr electricity bills',totalBill:41192,fatherPaid:35000,account:'Faysal'},
-];
-
-async function initApp(){
-  const check=()=>window.firebaseReady&&window.db;
-  let tries=0;
-  while(!check()&&tries<50){await new Promise(r=>setTimeout(r,100));tries++;}
-  if(!check()){showToast('Firebase connection failed','error');return;}
-
-  setSyncStatus('syncing');
-  try{
-    const [txSnap,faSnap]=await Promise.all([
-      window.fsDocs(window.fsCollection(window.db,'transactions')),
-      window.fsDocs(window.fsCollection(window.db,'fatherBills'))
-    ]);
-    if(txSnap.empty){
-      for(const t of SEED_TXS){await window.fsSetDoc(window.fsDoc(window.db,'transactions',t.id),t);}
-      txs=[...SEED_TXS];
-    } else {txs=txSnap.docs.map(d=>({id:d.id,...d.data()}));}
-    if(faSnap.empty){
-      for(const f of SEED_FATHER){await window.fsSetDoc(window.fsDoc(window.db,'fatherBills',f.id),f);}
-      fatherBills=[...SEED_FATHER];
-    } else {fatherBills=faSnap.docs.map(d=>({id:d.id,...d.data()}));}
-    setSyncStatus('synced');
-  } catch(e){console.error(e);setSyncStatus('error');txs=[...SEED_TXS];fatherBills=[...SEED_FATHER];}
-
-  document.getElementById('loading-screen').style.display='none';
-  document.getElementById('main-app').style.display='block';
-  let chartTries=0;
-  while(!window.Chart&&chartTries<30){await new Promise(r=>setTimeout(r,200));chartTries++;}
-  renderAll();
-}
-
-function setSyncStatus(s){const el=document.getElementById('sync-status');if(!el)return;el.className='sync-status '+s;el.textContent=s==='synced'?'● Synced':s==='syncing'?'◌ Syncing...':'✕ Offline';}
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-
-const mo=d=>d.substring(0,7);
-const fmt=n=>'PKR '+Math.round(n).toLocaleString();
-const fmts=n=>Math.round(n).toLocaleString();
-const S=(arr,fn)=>arr.reduce((s,t)=>s+(fn?fn(t):t),0);
-function GF(id){const el=document.getElementById(id);return el?el.value:'all';}
-
-function catColor(cat){const map={'Home expense':'#ef4444','Personal expense':'#6b7280','Family expense':'#ec4899','Grocery':'#1D9E75','Client expense':'#3b82f6','Food':'#f59e0b','Google Cloud':'#8b5cf6','Savings':'#8b5cf6','Utility':'#0ea5e9','Tax':'#f97316','Bank fee':'#6b7280','Investment':'#10b981','Salary':'#1D9E75','Incentive':'#34d399','Upwork':'#f59e0b'};return map[cat]||'#6b7280';}
-function catBadge(cat){return `<span class="badge" style="background:${catColor(cat)}22;color:${catColor(cat)}">${cat}</span>`;}
-function accBadge(a){const k=(a||'').toLowerCase().replace(/\s/g,'');return `<span class="badge b-${k}">${a}</span>`;}
-function txRow(t){return `<div class="row tx5"><span style="color:#475569">${t.date.slice(5)}</span><span style="font-size:10px;color:#cbd5e1">${t.desc}</span><span>${catBadge(t.cat)}</span><span>${accBadge(t.account)}</span><span class="${t.type==='in'?'in':'out'}">${fmt(t.amount)}</span></div>`;}
-
-function DC(id){if(CI[id]){CI[id].destroy();delete CI[id];}}
-
-function ST(name,el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  if(el)el.classList.add('active');
-}
-
-function renderAll(){
-  renderDash();renderIncome();renderExpenses();renderSavings();
-  renderUtilities();renderTaxFees();renderInvestments();renderFathers();renderAllTx();
-}
-
-function renderDash(){
-  const m=GF('d-mf');
-  const myInc=txs.filter(t=>MY_INC_CATS.includes(t.cat)&&t.type==='in'&&(m==='all'||mo(t.date)===m));
-  const totalInc=S(myInc,t=>t.amount);
-  const salary=S(myInc.filter(t=>t.cat==='Salary'),t=>t.amount);
-  const upwork=S(myInc.filter(t=>t.cat==='Upwork'),t=>t.amount);
-  const incentive=S(myInc.filter(t=>t.cat==='Incentive'),t=>t.amount);
-  const myExp=txs.filter(t=>EXP_CATS.includes(t.cat)&&t.type==='out'&&(m==='all'||mo(t.date)===m));
-  const totalExp=S(myExp,t=>t.amount);
-  const savings=S(txs.filter(t=>t.cat==='Savings'&&t.type==='out'&&(m==='all'||mo(t.date)===m)),t=>t.amount);
-
-  document.getElementById('d-inc-metrics').innerHTML=`
-    <div class="m"><div class="ml">Total income</div><div class="mv g">${fmt(totalInc)}</div><div class="ms">${m==='all'?'Jan–Apr 2026':MLbl[m]}</div></div>
-    <div class="m"><div class="ml">Salary</div><div class="mv">${fmt(salary)}</div></div>
-    <div class="m"><div class="ml">Upwork earnings</div><div class="mv b">${fmt(upwork)}</div></div>
-    <div class="m"><div class="ml">Incentive</div><div class="mv g">${fmt(incentive)}</div></div>
-    <div class="m"><div class="ml">Your expenses</div><div class="mv r">${fmt(totalExp)}</div></div>
-    <div class="m"><div class="ml">Savings</div><div class="mv p">${fmt(savings)}</div><div class="ms">${totalInc?((savings/totalInc)*100).toFixed(1)+'% of income':''}</div></div>
-  `;
-
-  const bankBal={};BANKS.forEach(b=>bankBal[b]=0);
-  txs.forEach(t=>{if(BANKS.includes(t.account))bankBal[t.account]+=(t.type==='in'?1:-1)*t.amount;});
-  document.getElementById('d-banks').innerHTML=BANKS.map(b=>{const v=bankBal[b];return `<div class="bcard"><div class="bname">${b}</div><div class="bbal ${v>=0?'pos':'neg'}">${fmt(v)}</div></div>`;}).join('');
-
-  const cashIn=S(txs.filter(t=>t.cat==='Cash in'&&(m==='all'||mo(t.date)===m)),t=>t.amount);
-  const cashOut=S(txs.filter(t=>t.cat==='Cash out'&&(m==='all'||mo(t.date)===m)),t=>t.amount);
-  const cashBal=cashIn-cashOut;
-  const cashTxs=txs.filter(t=>(t.cat==='Cash in'||t.cat==='Cash out')&&(m==='all'||mo(t.date)===m)).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6);
-  document.getElementById('d-cash').innerHTML=`
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px">
-      <div class="m"><div class="ml">Cash in hand</div><div class="mv ${cashBal>=0?'g':'r'}">${fmt(cashBal)}</div></div>
-      <div class="m"><div class="ml">Cash received</div><div class="mv g">${fmt(cashIn)}</div></div>
-      <div class="m"><div class="ml">Cash spent</div><div class="mv r">${fmt(cashOut)}</div></div>
-    </div>
-    ${cashTxs.length?'<div class="row rh tx5"><span>Date</span><span>Description</span><span>Type</span><span></span><span>Amount</span></div>'+cashTxs.map(txRow).join(''):'<div class="empty">No cash transactions yet. Click "+ Cash" to track.</div>'}
-  `;
-
-  // Buckets
-  let carry={needs:0,wants:0,savings:0,emergency:0};
-  const allM=m==='all'?MONTHS:[m];
-  const bucketData=[];
-  MONTHS.forEach(mon=>{
-    const monInc=S(txs.filter(t=>MY_INC_CATS.includes(t.cat)&&t.type==='in'&&mo(t.date)===mon),t=>t.amount);
-    const alloc={needs:monInc*.5,wants:monInc*.25,savings:monInc*.15,emergency:monInc*.1};
-    const spent={
-      needs:S(txs.filter(t=>['Home expense','Grocery','Utility','Client expense'].includes(t.cat)&&t.type==='out'&&mo(t.date)===mon),t=>t.amount),
-      wants:S(txs.filter(t=>['Personal expense','Family expense','Food','Google Cloud'].includes(t.cat)&&t.type==='out'&&mo(t.date)===mon),t=>t.amount),
-      savings:S(txs.filter(t=>t.cat==='Savings'&&t.type==='out'&&mo(t.date)===mon),t=>t.amount),
-      emergency:S(txs.filter(t=>t.cat==='Investment'&&t.type==='out'&&mo(t.date)===mon),t=>t.amount)
-    };
-    carry={
-      needs:Math.max(0,carry.needs+alloc.needs-spent.needs),
-      wants:Math.max(0,carry.wants+alloc.wants-spent.wants),
-      savings:Math.max(0,carry.savings+alloc.savings-spent.savings),
-      emergency:Math.max(0,carry.emergency+alloc.emergency-spent.emergency)
-    };
-    if(allM.includes(mon))bucketData.push({mon,alloc,spent,carry:{...carry}});
+  onSnapshot(q, (snap) => {
+    txs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderAll();
   });
-
-  const totAlloc={needs:S(bucketData,x=>x.alloc.needs),wants:S(bucketData,x=>x.alloc.wants),savings:S(bucketData,x=>x.alloc.savings),emergency:S(bucketData,x=>x.alloc.emergency)};
-  const totSpent={needs:S(bucketData,x=>x.spent.needs),wants:S(bucketData,x=>x.spent.wants),savings:S(bucketData,x=>x.spent.savings),emergency:S(bucketData,x=>x.spent.emergency)};
-  const lastCarry=bucketData.length?bucketData[bucketData.length-1].carry:{needs:0,wants:0,savings:0,emergency:0};
-  const bDefs=[{l:'50% Needs',k:'needs',c:'#1D9E75'},{l:'25% Wants',k:'wants',c:'#3b82f6'},{l:'15% Savings',k:'savings',c:'#8b5cf6'},{l:'10% Emergency',k:'emergency',c:'#f59e0b'}];
-  document.getElementById('d-buckets').innerHTML='<div class="bucket-grid">'+bDefs.map(bd=>{
-    const p=totAlloc[bd.k]?Math.min(150,Math.round(totSpent[bd.k]/totAlloc[bd.k]*100)):0;const ov=p>100;
-    return `<div class="card" style="padding:10px 12px"><div style="font-size:10px;font-weight:600;color:${bd.c};text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">${bd.l}</div><div style="font-size:17px;font-weight:600;color:#e2e8f0;margin-bottom:2px">${fmt(totAlloc[bd.k])}</div><div style="font-size:10px;color:#475569;margin-bottom:7px">allocated</div><div class="pb"><div class="pl"><span style="font-size:10px">Spent ${p}%</span><span style="font-size:10px;color:${ov?'#ef4444':bd.c}">${fmt(totSpent[bd.k])}</span></div><div class="pbg"><div class="pf" style="width:${Math.min(p,100)}%;background:${ov?'#ef4444':bd.c}"></div></div></div><div style="font-size:10px;color:${lastCarry[bd.k]>0?'#1D9E75':'#475569'}">Carry forward: ${fmt(lastCarry[bd.k])}</div></div>`;
-  }).join('')+'</div>';
-
-  const fTot=S(fatherBills.filter(f=>m==='all'||mo(f.date)===m),f=>f.totalBill);
-  const fPaid=S(fatherBills.filter(f=>m==='all'||mo(f.date)===m),f=>f.fatherPaid);
-  document.getElementById('d-father-summary').innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"><div class="m"><div class="ml">Total bills</div><div class="mv r">${fmt(fTot)}</div></div><div class="m"><div class="ml">Father contributed</div><div class="mv a">${fmt(fPaid)}</div></div><div class="m"><div class="ml">You paid extra</div><div class="mv r">${fmt(Math.max(0,fTot-fPaid))}</div><div class="ms">${fTot?((Math.max(0,fTot-fPaid)/fTot)*100).toFixed(0)+'% your share':''}</div></div></div>`;
-
-  if(!window.Chart)return;
-  const mInc=MONTHS.map(mn=>S(txs.filter(t=>MY_INC_CATS.includes(t.cat)&&t.type==='in'&&mo(t.date)===mn),t=>t.amount));
-  const mExp=MONTHS.map(mn=>S(txs.filter(t=>EXP_CATS.includes(t.cat)&&t.type==='out'&&mo(t.date)===mn),t=>t.amount));
-  DC('c-d-ie');CI['c-d-ie']=new Chart(document.getElementById('c-d-ie'),{type:'bar',data:{labels:MONTHS.map(x=>MLbl[x]),datasets:[{label:'Income',data:mInc,backgroundColor:'#1D9E75',borderRadius:3},{label:'Expenses',data:mExp,backgroundColor:'#ef4444',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8',font:{size:10},boxWidth:8}}},scales:{y:{ticks:{callback:v=>'PKR '+Math.round(v/1000)+'K',color:'#64748b',font:{size:9}},grid:{color:'#1e2535'}},x:{ticks:{color:'#64748b'},grid:{color:'#1e2535'}}}}});
-  const expAmts=EXP_CATS.map(c=>S(txs.filter(t=>t.cat===c&&t.type==='out'&&(m==='all'||mo(t.date)===m)),t=>t.amount));
-  DC('c-d-exp');CI['c-d-exp']=new Chart(document.getElementById('c-d-exp'),{type:'doughnut',data:{labels:EXP_CATS,datasets:[{data:expAmts,backgroundColor:EXP_CATS.map(catColor),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#94a3b8',font:{size:9},boxWidth:7}}}}});
 }
 
-function renderIncome(){
-  const m=GF('i-mf');
-  const base=txs.filter(t=>MY_INC_CATS.includes(t.cat)&&t.type==='in'&&(m==='all'||mo(t.date)===m));
-  const total=S(base,t=>t.amount),sal=S(base.filter(t=>t.cat==='Salary'),t=>t.amount),up=S(base.filter(t=>t.cat==='Upwork'),t=>t.amount),inc2=S(base.filter(t=>t.cat==='Incentive'),t=>t.amount),loan=S(base.filter(t=>t.cat==='Loan repayment'),t=>t.amount);
-  document.getElementById('i-metrics').innerHTML=`<div class="m"><div class="ml">Total</div><div class="mv g">${fmt(total)}</div></div><div class="m"><div class="ml">Salary</div><div class="mv">${fmt(sal)}</div></div><div class="m"><div class="ml">Upwork</div><div class="mv b">${fmt(up)}</div></div><div class="m"><div class="ml">Incentive</div><div class="mv g">${fmt(inc2)}</div></div><div class="m"><div class="ml">Loan repayments</div><div class="mv p">${fmt(loan)}</div></div>`;
-  if(!window.Chart)return;
-  const allM=m==='all'?MONTHS:[m];
-  DC('c-i-mon');CI['c-i-mon']=new Chart(document.getElementById('c-i-mon'),{type:'bar',data:{labels:allM.map(x=>MLbl[x]),datasets:[{label:'Salary',data:allM.map(mn=>S(txs.filter(t=>t.cat==='Salary'&&mo(t.date)===mn),t=>t.amount)),backgroundColor:'#185FA5',borderRadius:2},{label:'Incentive',data:allM.map(mn=>S(txs.filter(t=>t.cat==='Incentive'&&mo(t.date)===mn),t=>t.amount)),backgroundColor:'#1D9E75',borderRadius:2},{label:'Upwork',data:allM.map(mn=>S(txs.filter(t=>t.cat==='Upwork'&&mo(t.date)===mn),t=>t.amount)),backgroundColor:'#f59e0b',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8',font:{size:10},boxWidth:7}}},scales:{y:{stacked:true,ticks:{callback:v=>'PKR '+Math.round(v/1000)+'K',color:'#64748b',font:{size:9}},grid:{color:'#1e2535'}},x:{stacked:true,ticks:{color:'#64748b'},grid:{color:'#1e2535'}}}}});
-  const upTxs=txs.filter(t=>t.cat==='Upwork'&&(m==='all'||mo(t.date)===m));
-  DC('c-i-upw');CI['c-i-upw']=new Chart(document.getElementById('c-i-upw'),{type:'bar',data:{labels:upTxs.map(t=>t.date.slice(5)),datasets:[{label:'Amount',data:upTxs.map(t=>t.amount),backgroundColor:'#f59e0b',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'PKR '+Math.round(v/1000)+'K',color:'#64748b',font:{size:9}},grid:{color:'#1e2535'}},x:{ticks:{color:'#64748b'},grid:{color:'#1e2535'}}}}});
-  document.getElementById('i-list').innerHTML=base.sort((a,b)=>b.date.localeCompare(a.date)).map(txRow).join('');
-}
-
-function renderExpenses(){
-  const m=GF('e-mf'),cf=GF('e-cf'),sf=(document.getElementById('e-sf')||{}).value||'';
-  let base=txs.filter(t=>EXP_CATS.includes(t.cat)&&t.type==='out'&&(m==='all'||mo(t.date)===m));
-  const total=S(base,t=>t.amount);
-  document.getElementById('e-metrics').innerHTML=`<div class="m"><div class="ml">Total expenses</div><div class="mv r">${fmt(total)}</div></div>`+EXP_CATS.map(c=>`<div class="m"><div class="ml">${c}</div><div class="mv" style="font-size:14px;color:${catColor(c)}">${fmt(S(base.filter(t=>t.cat===c),t=>t.amount))}</div></div>`).join('');
-  if(window.Chart){
-    const allM=m==='all'?MONTHS:[m];
-    DC('c-e-donut');CI['c-e-donut']=new Chart(document.getElementById('c-e-donut'),{type:'doughnut',data:{labels:EXP_CATS,datasets:[{data:EXP_CATS.map(c=>S(base.filter(t=>t.cat===c),t=>t.amount)),backgroundColor:EXP_CATS.map(catColor),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#94a3b8',font:{size:9},boxWidth:7}}}}});
-    DC('c-e-trend');CI['c-e-trend']=new Chart(document.getElementById('c-e-trend'),{type:'line',data:{labels:allM.map(x=>MLbl[x]),datasets:EXP_CATS.slice(0,4).map(c=>({label:c,data:allM.map(mn=>S(txs.filter(t=>t.cat===c&&t.type==='out'&&mo(t.date)===mn),t=>t.amount)),borderColor:catColor(c),tension:.3,pointRadius:3}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8',font:{size:9},boxWidth:7}}},scales:{y:{ticks:{callback:v=>'PKR '+Math.round(v/1000)+'K',color:'#64748b',font:{size:9}},grid:{color:'#1e2535'}},x:{ticks:{color:'#64748b'},grid:{color:'#1e2535'}}}}});
-  }
-  let show=base;
-  if(cf)show=show.filter(t=>t.cat===cf);
-  if(sf)show=show.filter(t=>t.desc.toLowerCase().includes(sf.toLowerCase()));
-  document.getElementById('e-list').innerHTML=show.sort((a,b)=>b.date.localeCompare(a.date)).map(txRow).join('')||'<div class="empty">No results</div>';
-}
-
-function renderSavings(){
-  const m=GF('s-mf');
-  const base=txs.filter(t=>t.cat==='Savings'&&t.type==='out'&&(m==='all'||mo(t.date)===m));
-  const total=S(base,t=>t.amount);
-  const myInc=S(txs.filter(t=>MY_INC_CATS.includes(t.cat)&&t.type==='in'&&(m==='all'||mo(t.date)===m)),t=>t.amount);
-  document.getElementById('s-metrics').innerHTML=`<div class="m"><div class="ml">Total savings</div><div class="mv p">${fmt(total)}</div><div class="ms">Tanzeela Asaan A/C</div></div><div class="m"><div class="ml">Savings rate</div><div class="mv g">${myInc?((total/myInc)*100).toFixed(1):0}%</div><div class="ms">Target: 15%</div></div><div class="m"><div class="ml">15% target</div><div class="mv">${fmt(myInc*.15)}</div></div><div class="m"><div class="ml">Gap to target</div><div class="mv ${total>=myInc*.15?'g':'r'}">${fmt(Math.abs(myInc*.15-total))}</div></div>`;
-  if(window.Chart){const allM=m==='all'?MONTHS:[m];DC('c-s-bar');CI['c-s-bar']=new Chart(document.getElementById('c-s-bar'),{type:'bar',data:{labels:allM.map(x=>MLbl[x]),datasets:[{label:'Savings',data:allM.map(mn=>S(txs.filter(t=>t.cat==='Savings'&&t.type==='out'&&mo(t.date)===mn),t=>t.amount)),backgroundColor:'#8b5cf6',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'PKR '+Math.round(v/1000)+'K',color:'#64748b',font:{size:9}},grid:{color:'#1e2535'}},x:{ticks:{color:'#64748b'},grid:{color:'#1e2535'}}}}});}
-  const needs=S(txs.filter(t=>['Home expense','Grocery','Utility','Client expense'].includes(t.cat)&&t.type==='out'&&(m==='all'||mo(t.date)===m)),t=>t.amount);
-  const wants=S(txs.filter(t=>['Personal expense','Family expense','Food','Google Cloud'].includes(t.cat)&&t.type==='out'&&(m==='all'||mo(t.date)===m)),t=>t.amount);
-  const rules=[{l:'50% Needs',a:myInc*.5,s:needs,c:'#1D9E75'},{l:'25% Wants',a:myInc*.25,s:wants,c:'#3b82f6'},{l:'15% Savings',a:myInc*.15,s:total,c:'#8b5cf6'},{l:'10% Emergency',a:myInc*.1,s:0,c:'#f59e0b'}];
-  document.getElementById('s-budget').innerHTML=rules.map(r=>{const p=r.a?Math.min(150,Math.round(r.s/r.a*100)):0;const ov=p>100;return `<div class="pb"><div class="pl"><span>${r.l}</span><span style="color:${ov?'#ef4444':r.c}">${fmt(r.s)} / ${fmt(r.a)} (${p}%)</span></div><div class="pbg"><div class="pf" style="width:${Math.min(p,100)}%;background:${ov?'#ef4444':r.c}"></div></div></div>`;}).join('');
-  document.getElementById('s-list').innerHTML=base.sort((a,b)=>b.date.localeCompare(a.date)).map(t=>`<div class="row tx5"><span style="color:#475569">${t.date.slice(5)}</span><span style="font-size:10px;color:#cbd5e1">${t.desc}</span><span>${catBadge('Savings')}</span><span style="font-size:10px;color:#94a3b8">${t.savTo||'Tanzeela Asaan'}</span><span class="out">${fmt(t.amount)}</span></div>`).join('')||'<div class="empty">No savings yet</div>';
-}
-
-function renderUtilities(){
-  const m=GF('u-mf');
-  const base=txs.filter(t=>t.cat==='Utility'&&t.type==='out'&&(m==='all'||mo(t.date)===m));
-  const ke=S(base.filter(t=>t.desc.includes('K-Electric')),t=>t.amount),sg=S(base.filter(t=>t.desc.includes('SSGC')),t=>t.amount),tel=S(base.filter(t=>t.desc.includes('Zong')||t.desc.includes('Jazz')||t.desc.includes('Ufone')),t=>t.amount);
-  const fTot=S(fatherBills.filter(f=>m==='all'||mo(f.date)===m),f=>f.fatherPaid);
-  const youPaid=Math.max(0,S(base,t=>t.amount)-fTot);
-  document.getElementById('u-metrics').innerHTML=`<div class="m"><div class="ml">Total utilities</div><div class="mv r">${fmt(S(base,t=>t.amount))}</div></div><div class="m"><div class="ml">K-Electric</div><div class="mv">${fmt(ke)}</div></div><div class="m"><div class="ml">SSGC gas</div><div class="mv b">${fmt(sg)}</div></div><div class="m"><div class="ml">Telecom</div><div class="mv a">${fmt(tel)}</div></div><div class="m"><div class="ml">Father's share</div><div class="mv a">${fmt(fTot)}</div></div><div class="m"><div class="ml">Your share</div><div class="mv r">${fmt(youPaid)}</div></div>`;
-  const allM=m==='all'?MONTHS:[m];
-  const keM=['0785097','0785510','0788188','0785790','0785219','0045340951','0045340943','0001585426','0001585272','0001585124','0001585582'];
-  const sgC=['4184530000','5722434767','8948017893','0708266647','1456130000'];
-  const keD={};keM.forEach(k=>{keD[k]=allM.map(()=>0);});
-  base.filter(t=>t.desc.includes('K-Electric')).forEach(t=>{keM.forEach(k=>{if(t.desc.includes(k)){const i=allM.indexOf(mo(t.date));if(i>=0)keD[k][i]+=t.amount;}});});
-  const keTots=allM.map((_,i)=>keM.reduce((s,k)=>s+keD[k][i],0));
-  const fByM=allM.map(mn=>S(fatherBills.filter(f=>mo(f.date)===mn),f=>f.fatherPaid));
-  const cols=`1fr ${allM.map(()=>'65px').join(' ')}`;
-  const hdr=`<div class="row rh" style="grid-template-columns:${cols};gap:5px;font-size:9px"><span>Meter</span>${allM.map(mn=>`<span>${MLbl[mn]}</span>`).join('')}</div>`;
-  document.getElementById('ke-table').innerHTML=hdr+keM.filter(k=>keD[k].some(v=>v>0)).map(k=>`<div class="row" style="grid-template-columns:${cols};gap:5px;font-size:10px;color:#cbd5e1"><span style="color:#94a3b8">${k}</span>${keD[k].map(v=>`<span style="color:${v>7000?'#ef4444':v>0?'#cbd5e1':'#334155'}">${v?fmts(v):'-'}</span>`).join('')}</div>`).join('')+`<div class="row" style="grid-template-columns:${cols};gap:5px;font-size:10px;font-weight:600;background:#1e2535;border-radius:6px;padding:7px 0"><span style="color:#94a3b8">Your share</span>${keTots.map((v,i)=>`<span style="color:#ef4444">${fmts(Math.max(0,v-fByM[i]))}</span>`).join('')}</div>`;
-  const sgD={};sgC.forEach(c=>{sgD[c]=allM.map(()=>0);});
-  base.filter(t=>t.desc.includes('SSGC')).forEach(t=>{sgC.forEach(c=>{if(t.desc.includes(c)){const i=allM.indexOf(mo(t.date));if(i>=0)sgD[c][i]+=t.amount;}});});
-  const sgTots=allM.map((_,i)=>sgC.reduce((s,c)=>s+sgD[c][i],0));
-  document.getElementById('ssgc-table').innerHTML=hdr.replace('Meter','Connection')+sgC.filter(c=>sgD[c].some(v=>v>0)).map(c=>`<div class="row" style="grid-template-columns:${cols};gap:5px;font-size:10px;color:#cbd5e1"><span style="color:#94a3b8">${c}</span>${sgD[c].map(v=>`<span>${v?fmts(v):'-'}</span>`).join('')}</div>`).join('')+`<div class="row" style="grid-template-columns:${cols};gap:5px;font-size:10px;font-weight:600;background:#1e2535;border-radius:6px;padding:7px 0"><span style="color:#94a3b8">Total</span>${sgTots.map(v=>`<span style="color:#3b82f6">${fmts(v)}</span>`).join('')}</div>`;
-  if(window.Chart){
-    const mKE=allM.map(mn=>S(base.filter(t=>mo(t.date)===mn&&t.desc.includes('K-Electric')),t=>t.amount));
-    const mSG=allM.map(mn=>S(base.filter(t=>mo(t.date)===mn&&t.desc.includes('SSGC')),t=>t.amount));
-    DC('c-u-trend');CI['c-u-trend']=new Chart(document.getElementById('c-u-trend'),{type:'line',data:{labels:allM.map(x=>MLbl[x]),datasets:[{label:'K-Electric',data:mKE,borderColor:'#ef4444',tension:.3,pointRadius:4},{label:'SSGC',data:mSG,borderColor:'#3b82f6',tension:.3,pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8',font:{size:10},boxWidth:7}}},scales:{y:{ticks:{color:'#64748b',font:{size:9}},grid:{color:'#1e2535'}},x:{ticks:{color:'#64748b'},grid:{color:'#1e2535'}}}}});
-  }
-  document.getElementById('u-share').innerHTML=allM.map((mn,i)=>{const ut=S(base.filter(t=>mo(t.date)===mn),t=>t.amount);const fp=fByM[i];return `<div style="margin-bottom:10px"><div style="font-size:11px;font-weight:500;color:#94a3b8;margin-bottom:4px">${MLbl[mn]}</div><div style="font-size:11px;color:#f59e0b">Father: ${fmt(fp)}</div><div style="font-size:11px;color:#ef4444">You: ${fmt(Math.max(0,ut-fp))}</div></div>`;}).join('');
-}
-
-function renderTaxFees(){
-  const m=GF('tf-mf');
-  const tb=txs.filter(t=>t.cat==='Tax'&&t.type==='out'&&(m==='all'||mo(t.date)===m));
-  const fb=txs.filter(t=>t.cat==='Bank fee'&&t.type==='out'&&(m==='all'||mo(t.date)===m));
-  const tTax=S(tb,t=>t.amount),tFee=S(fb,t=>t.amount),fed=S(tb.filter(t=>t.taxType==='FED'),t=>t.amount),adv=S(tb.filter(t=>t.taxType==='Advance 236Y'),t=>t.amount);
-  const myInc=S(txs.filter(t=>MY_INC_CATS.includes(t.cat)&&t.type==='in'&&(m==='all'||mo(t.date)===m)),t=>t.amount);
-  document.getElementById('t-metrics').innerHTML=`<div class="m"><div class="ml">Total tax</div><div class="mv a">${fmt(tTax)}</div></div><div class="m"><div class="ml">FED</div><div class="mv">${fmt(fed)}</div></div><div class="m"><div class="ml">Advance 236Y</div><div class="mv r">${fmt(adv)}</div></div><div class="m"><div class="ml">Effective rate</div><div class="mv">${myInc?((tTax/myInc)*100).toFixed(2):0}%</div></div><div class="m"><div class="ml">Bank fees</div><div class="mv r">${fmt(tFee)}</div></div><div class="m"><div class="ml">Tax + fees</div><div class="mv r">${fmt(tTax+tFee)}</div></div>`;
-  if(window.Chart){
-    const allM=m==='all'?MONTHS:[m];
-    DC('c-t-tax');CI['c-t-tax']=new Chart(document.getElementById('c-t-tax'),{type:'bar',data:{labels:allM.map(x=>MLbl[x]),datasets:[{label:'FED',data:allM.map(mn=>S(tb.filter(t=>mo(t.date)===mn&&t.taxType==='FED'),t=>t.amount)),backgroundColor:'#f59e0b',borderRadius:2},{label:'236Y',data:allM.map(mn=>S(tb.filter(t=>mo(t.date)===mn&&t.taxType==='Advance 236Y'),t=>t.amount)),backgroundColor:'#ef4444',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8',font:{size:9},boxWidth:7}}},scales:{y:{stacked:true,ticks:{color:'#64748b',font:{size:9}},grid:{color:'#1e2535'}},x:{stacked:true,ticks:{color:'#64748b'},grid:{color:'#1e2535'}}}}});
-    DC('c-t-fee');CI['c-t-fee']=new Chart(document.getElementById('c-t-fee'),{type:'bar',data:{labels:allM.map(x=>MLbl[x]),datasets:[{label:'Fees',data:allM.map(mn=>S(fb.filter(t=>mo(t.date)===mn),t=>t.amount)),backgroundColor:'#6b7280',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{color:'#64748b',font:{size:9}},grid:{color:'#1e2535'}},x:{ticks:{color:'#64748b'},grid:{color:'#1e2535'}}}}});
-  }
-  document.getElementById('t-list').innerHTML=tb.sort((a,b)=>b.date.localeCompare(a.date)).map(txRow).join('')||'<div class="empty">No tax transactions</div>';
-  document.getElementById('f-list').innerHTML=fb.sort((a,b)=>b.date.localeCompare(a.date)).map(txRow).join('')||'<div class="empty">No fee transactions</div>';
-}
-
-function renderInvestments(){
-  const m=GF('inv-mf');
-  const base=txs.filter(t=>t.cat==='Investment'&&(m==='all'||mo(t.date)===m));
-  const gc=txs.filter(t=>t.cat==='Google Cloud'&&(m==='all'||mo(t.date)===m));
-  document.getElementById('inv-metrics').innerHTML=`<div class="m"><div class="ml">Total invested</div><div class="mv g">${fmt(S(base,t=>t.amount))}</div></div><div class="m"><div class="ml">SaaS</div><div class="mv b">${fmt(S(base.filter(t=>t.invCat==='SaaS'),t=>t.amount))}</div></div><div class="m"><div class="ml">Agency/Service</div><div class="mv a">${fmt(S(base.filter(t=>t.invCat==='Service base'),t=>t.amount))}</div></div><div class="m"><div class="ml">Google Cloud</div><div class="mv">${fmt(S(gc,t=>t.amount))}</div><div class="ms">PKR 419/month</div></div>`;
-  document.getElementById('inv-list').innerHTML=base.sort((a,b)=>b.date.localeCompare(a.date)).map(txRow).join('')||'<div class="empty">No investments yet. Click "+ Add investment" to start tracking SaaS & Agency costs.</div>';
-  document.getElementById('gc-list').innerHTML=gc.sort((a,b)=>b.date.localeCompare(a.date)).map(txRow).join('');
-}
-
-function renderFathers(){
-  const m=GF('fa-mf');
-  const base=fatherBills.filter(f=>m==='all'||mo(f.date)===m);
-  const tBill=S(base,f=>f.totalBill),fPaid=S(base,f=>f.fatherPaid),you=tBill-fPaid;
-  document.getElementById('fa-metrics').innerHTML=`<div class="m"><div class="ml">Total bills</div><div class="mv r">${fmt(tBill)}</div></div><div class="m"><div class="ml">Father paid (cash)</div><div class="mv a">${fmt(fPaid)}</div><div class="ms">${tBill?((fPaid/tBill)*100).toFixed(0)+'%':''}</div></div><div class="m"><div class="ml">You paid from pocket</div><div class="mv r">${fmt(you)}</div><div class="ms">${tBill?((you/tBill)*100).toFixed(0)+'%':''}</div></div><div class="m"><div class="ml">Bill batches</div><div class="mv">${base.length}</div></div>`;
-  document.getElementById('fa-list').innerHTML=base.sort((a,b)=>b.date.localeCompare(a.date)).map(f=>`<div class="father-row"><span style="color:#475569">${f.date.slice(5)}</span><span style="font-size:10px;color:#cbd5e1">${f.desc}</span><span style="color:#e2e8f0">${fmt(f.totalBill)}</span><span class="in">${fmt(f.fatherPaid)}</span><span class="out">${fmt(f.totalBill-f.fatherPaid)}</span></div>`).join('')||'<div class="empty">No father bill records yet.</div>';
-  if(window.Chart){
-    const allM=m==='all'?MONTHS:[m];
-    const mF=allM.map(mn=>S(fatherBills.filter(f=>mo(f.date)===mn),f=>f.fatherPaid));
-    const mY=allM.map(mn=>{const ut=S(txs.filter(t=>t.cat==='Utility'&&t.type==='out'&&mo(t.date)===mn),t=>t.amount);return Math.max(0,ut-S(fatherBills.filter(f=>mo(f.date)===mn),f=>f.fatherPaid));});
-    DC('c-fa');CI['c-fa']=new Chart(document.getElementById('c-fa'),{type:'bar',data:{labels:allM.map(x=>MLbl[x]),datasets:[{label:"Father's share",data:mF,backgroundColor:'#f59e0b',borderRadius:3},{label:'Your share',data:mY,backgroundColor:'#ef4444',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8',font:{size:10},boxWidth:8}}},scales:{y:{stacked:true,ticks:{callback:v=>'PKR '+fmts(v),color:'#64748b',font:{size:9}},grid:{color:'#1e2535'}},x:{stacked:true,ticks:{color:'#64748b'},grid:{color:'#1e2535'}}}}});
-  }
-}
-
-function renderAllTx(){
-  const m=GF('at-mf'),acc=GF('at-acc'),tp=GF('at-tp'),cat=GF('at-cat'),sf=(document.getElementById('at-sf')||{}).value||'';
-  let base=txs.filter(t=>{
-    if(m!=='all'&&mo(t.date)!==m)return false;
-    if(acc&&t.account!==acc)return false;
-    if(tp&&t.type!==tp)return false;
-    if(cat&&t.cat!==cat)return false;
-    if(sf&&!t.desc.toLowerCase().includes(sf.toLowerCase()))return false;
-    return true;
-  }).sort((a,b)=>b.date.localeCompare(a.date));
-  const tIn=S(base.filter(t=>t.type==='in'),t=>t.amount),tOut=S(base.filter(t=>t.type==='out'),t=>t.amount);
-  document.getElementById('at-summary').innerHTML=`${base.length} transactions &nbsp;|&nbsp; <span class="in">In: ${fmt(tIn)}</span> &nbsp;|&nbsp; <span class="out">Out: ${fmt(tOut)}</span>`;
-  document.getElementById('at-list').innerHTML=base.map(txRow).join('')||'<div class="empty">No transactions match</div>';
-}
-
-// MODALS
-const BOPT=BANKS.map(b=>`<option>${b}</option>`).join('');
-const MODAL_DEFS={
-  income:{title:'Add income',html:`<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>From whom</label><input type="text" id="m-from" placeholder="e.g. Office CMD, Payment Escrow"></div><div class="fg"><label>Which bank</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Source</label><select id="m-src"><option>Salary</option><option>Incentive</option><option>Upwork</option><option>Loan repayment</option><option>Other income</option></select></div><div class="fg"><label>Description</label><input type="text" id="m-desc" placeholder="Brief description"></div><div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt" placeholder="0" min="0"></div>`},
-  expense:{title:'Add expense',html:`<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>For whom / which</label><input type="text" id="m-for" placeholder="e.g. Imtiaz, Home, Self"></div><div class="fg"><label>Which bank</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Payment mode</label><select id="m-mode"><option>Transfer</option><option>Cash</option><option>Card</option><option>ATM</option></select></div><div class="fg"><label>Category</label><select id="m-cat"><option>Home expense</option><option>Personal expense</option><option>Family expense</option><option>Grocery</option><option>Client expense</option><option>Food</option><option>Utility</option><option>Google Cloud</option></select></div><div class="fg"><label>Description</label><input type="text" id="m-desc" placeholder="Brief description"></div><div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt" placeholder="0" min="0"></div>`},
-  tax:{title:'Add tax / bank fee',html:`<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Which bank</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Type</label><select id="m-taxtype"><option>FED</option><option>Advance 236Y</option><option>Bank fee</option><option>SMS fee</option><option>POS charge</option><option>ATM fee</option><option>Other tax</option></select></div><div class="fg"><label>Description</label><input type="text" id="m-desc" placeholder="e.g. Federal Excise Duty"></div><div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt" placeholder="0" min="0"></div>`},
-  investment:{title:'Add investment',html:`<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Which bank</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Category</label><select id="m-invcat"><option>SaaS</option><option>Service base</option><option>Personal</option></select></div><div class="fg"><label>Description</label><input type="text" id="m-desc" placeholder="e.g. SaaS tool, Agency setup"></div><div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt" placeholder="0" min="0"></div>`},
-  savings:{title:'Add savings transfer',html:`<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>From bank</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>To account</label><input type="text" id="m-to" placeholder="e.g. Tanzeela Asaan A/C" value="Tanzeela Asaan A/C"></div><div class="fg"><label>Description</label><input type="text" id="m-desc" placeholder="Monthly savings"></div><div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt" placeholder="0" min="0"></div>`},
-  father:{title:"Add father's bill entry",html:`<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Bill description</label><input type="text" id="m-desc" placeholder="e.g. April electricity bills"></div><div class="fg"><label>Total bill amount (PKR)</label><input type="number" id="m-total" placeholder="Total you paid from your bank" min="0"></div><div class="fg"><label>Father paid you in cash (PKR)</label><input type="number" id="m-fpaid" placeholder="Amount father gave you" min="0"></div><div class="fg"><label>Paid from bank</label><select id="m-bank"><option>Faysal</option><option>Meezan</option><option>MCB</option></select></div>`},
-  cash:{title:'Cash movement',html:`<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Type</label><select id="m-cashtype"><option value="in">Cash received (add to hand)</option><option value="out">Cash spent (deduct from hand)</option></select></div><div class="fg"><label>Description</label><input type="text" id="m-desc" placeholder="e.g. ATM withdrawal, Market shopping"></div><div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt" placeholder="0" min="0"></div>`}
+const MODAL_DEFS = {
+  income: { title: 'Add Income', fields: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Bank</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Category</label><input type="text" id="m-cat" value="Salary"></div><div class="fg"><label>Description</label><input type="text" id="m-desc"></div><div class="fg"><label>Amount</label><input type="number" id="m-amt"></div>` },
+  expense: { title: 'Add Expense', fields: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Bank</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Category</label><input type="text" id="m-cat" value="Home"></div><div class="fg"><label>Description</label><input type="text" id="m-desc"></div><div class="fg"><label>Amount</label><input type="number" id="m-amt"></div>` },
+  transfer: { title: 'Bank Transfer', fields: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>From</label><select id="m-bank-from">${BOPT}</select></div><div class="fg"><label>To</label><select id="m-bank-to">${BOPT}</select></div><div class="fg"><label>Description</label><input type="text" id="m-desc" value="Internal Transfer"></div><div class="fg"><label>Amount</label><input type="number" id="m-amt"></div>` }
 };
 
-function OM(type){
-  currentModal=type;
-  const def=MODAL_DEFS[type];
-  document.getElementById('m-title').textContent=def.title;
-  document.getElementById('m-body').innerHTML=def.html;
-  const de=document.getElementById('m-date');
-  if(de)de.value=new Date().toISOString().slice(0,10);
-  document.getElementById('modal').classList.add('open');
-}
-function CM(){document.getElementById('modal').classList.remove('open');}
+window.OM = (type) => {
+    currentModal = type;
+    document.getElementById('m-title').innerText = MODAL_DEFS[type].title;
+    document.getElementById('m-body').innerHTML = MODAL_DEFS[type].fields;
+    document.getElementById('m-edit-id').value = '';
+    document.getElementById('m-date').value = new Date().toISOString().split('T')[0];
+    document.getElementById('modal').classList.add('open');
+};
 
-async function saveEntry(){
-  const v=id=>document.getElementById(id);
-  const date=v('m-date')?.value;
-  const desc=v('m-desc')?.value?.trim();
-  const amt=parseFloat(v('m-amt')?.value);
-  const bank=v('m-bank')?.value||'Meezan';
-  setSyncStatus('syncing');
+window.CM = () => document.getElementById('modal').classList.remove('open');
 
-  try{
-    if(currentModal==='father'){
-      const total=parseFloat(v('m-total')?.value);
-      const fpaid=parseFloat(v('m-fpaid')?.value);
-      if(!date||!desc||!total||isNaN(total)||!fpaid||isNaN(fpaid)){alert('Please fill all fields');setSyncStatus('synced');return;}
-      const fb={id:'fb'+Date.now(),date,desc,totalBill:total,fatherPaid:fpaid,account:bank};
-      await window.fsSetDoc(window.fsDoc(window.db,'fatherBills',fb.id),fb);
-      fatherBills.push(fb);
-    } else if(currentModal==='cash'){
-      const ct=v('m-cashtype')?.value;
-      if(!date||!desc||!amt||isNaN(amt)){alert('Please fill all fields');setSyncStatus('synced');return;}
-      const t={id:'c'+Date.now(),date,desc,account:'Cash',type:ct,amount:amt,cat:ct==='in'?'Cash in':'Cash out'};
-      await window.fsSetDoc(window.fsDoc(window.db,'transactions',t.id),t);
-      txs.push(t);
+// Requirement 1 & 5: Save & Edit Logic
+window.saveEntry = async () => {
+    const editId = document.getElementById('m-edit-id').value;
+    const data = {
+        uid: currentUser.uid,
+        userEmail: currentUser.email,
+        userName: currentUser.displayName,
+        date: document.getElementById('m-date').value,
+        desc: document.getElementById('m-desc').value,
+        amount: parseFloat(document.getElementById('m-amt').value)
+    };
+
+    if(currentModal === 'transfer') {
+        data.type = 'transfer';
+        data.fromBank = document.getElementById('m-bank-from').value;
+        data.toBank = document.getElementById('m-bank-to').value;
+        data.cat = 'Transfer';
     } else {
-      if(!date||!desc||!amt||isNaN(amt)){alert('Please fill all fields');setSyncStatus('synced');return;}
-      const id='t'+Date.now();
-      let t={id,date,desc,account:bank,type:'out',amount:amt};
-      if(currentModal==='income'){t={...t,type:'in',cat:v('m-src')?.value||'Other income',from:v('m-from')?.value||''};}
-      else if(currentModal==='expense'){t={...t,cat:v('m-cat')?.value||'Home expense',mode:v('m-mode')?.value||''};}
-      else if(currentModal==='tax'){const tt=v('m-taxtype')?.value;const isFee=['Bank fee','SMS fee','POS charge','ATM fee'].includes(tt);t={...t,cat:isFee?'Bank fee':'Tax',taxType:tt,feeType:tt};}
-      else if(currentModal==='investment'){t={...t,cat:'Investment',invCat:v('m-invcat')?.value};}
-      else if(currentModal==='savings'){t={...t,cat:'Savings',savFrom:bank,savTo:v('m-to')?.value||'Tanzeela Asaan'};}
-      await window.fsSetDoc(window.fsDoc(window.db,'transactions',t.id),t);
-      txs.push(t);
+        data.type = currentModal === 'income' ? 'in' : 'out';
+        data.account = document.getElementById('m-bank').value;
+        data.cat = document.getElementById('m-cat').value;
     }
-    setSyncStatus('synced');
-    showToast('Saved to Firebase ✓');
-    CM();renderAll();
-  } catch(e){
-    console.error(e);
-    setSyncStatus('error');
-    showToast('Save failed — check connection');
-  }
+
+    if(editId) {
+        await updateDoc(doc(db, 'transactions', editId), data);
+    } else {
+        await addDoc(collection(db, 'transactions'), data);
+    }
+    CM();
+};
+
+window.editTx = (id) => {
+    const t = txs.find(x => x.id === id);
+    OM(t.type === 'transfer' ? 'transfer' : (t.type === 'in' ? 'income' : 'expense'));
+    setTimeout(() => {
+        document.getElementById('m-edit-id').value = t.id;
+        document.getElementById('m-date').value = t.date;
+        document.getElementById('m-desc').value = t.desc;
+        document.getElementById('m-amt').value = t.amount;
+        if(t.type === 'transfer') {
+            document.getElementById('m-bank-from').value = t.fromBank;
+            document.getElementById('m-bank-to').value = t.toBank;
+        } else {
+            document.getElementById('m-bank').value = t.account;
+            document.getElementById('m-cat').value = t.cat;
+        }
+    }, 50);
+};
+
+function renderAll() {
+    const balances = { MCB:0, Meezan:0, Faysal:0, Easypaisa:0, Nayapay:0, Cash:0 };
+    let inc = 0, exp = 0;
+
+    txs.forEach(t => {
+        // Requirement 5: Transfer Balance Logic
+        if(t.type === 'transfer') {
+            balances[t.fromBank] -= t.amount;
+            balances[t.toBank] += t.amount;
+        } else {
+            balances[t.account] += (t.type === 'in' ? 1 : -1) * t.amount;
+            if(t.type === 'in') inc += t.amount; else exp += t.amount;
+        }
+    });
+
+    document.getElementById('metrics').innerHTML = `
+        <div class="m"><div class="ml">Total Income</div><div class="mv" style="color:var(--green)">PKR ${inc.toLocaleString()}</div></div>
+        <div class="m"><div class="ml">Total Expense</div><div class="mv" style="color:var(--red)">PKR ${exp.toLocaleString()}</div></div>
+        ${Object.keys(balances).map(b => `<div class="m"><div class="ml">${b} Balance</div><div class="mv">${balances[b].toLocaleString()}</div></div>`).join('')}
+    `;
+
+    const listHtml = txs.slice(0, 15).map(t => `
+        <div class="row tx-grid">
+            <span>${t.date.slice(5)}</span>
+            <span style="font-size:10px">${t.desc} ${currentUser.email === ADMIN_EMAIL ? `<br><small style="color:var(--primary)">${t.userName}</small>` : ''}</span>
+            <span class="hide-mobile">${t.cat}</span>
+            <span>${t.type === 'transfer' ? t.fromBank+'→'+t.toBank : t.account}</span>
+            <span style="color:${t.type==='in'?'var(--green)':'var(--red)'}">${t.amount}</span>
+            <button class="edit-btn" onclick="editTx('${t.id}')">Edit</button>
+        </div>
+    `).join('');
+    
+    document.getElementById('recent-list').innerHTML = listHtml;
+    document.getElementById('history-list').innerHTML = listHtml;
 }
+
+window.ST = (t, b) => {
+    document.querySelectorAll('.tab').forEach(x => x.style.display = 'none');
+    document.querySelectorAll('.nb').forEach(x => x.classList.remove('active'));
+    document.getElementById('tab-'+t).style.display = 'block';
+    b.classList.add('active');
+};
 </script>
 </body>
 </html>
-
