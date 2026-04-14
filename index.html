@@ -158,17 +158,39 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-document.getElementById('btn-submit').onclick = async () => {
+// ATTACH THIS TO THE WINDOW OBJECT SO THE BUTTON CAN SEE IT
+window.emailLogin = async () => {
     const email = document.getElementById('auth-email').value;
     const password = document.getElementById('auth-pw').value;
     const msg = document.getElementById('auth-msg');
+    
+    if(!email || !password) {
+        msg.innerText = "Please enter both email and password.";
+        return;
+    }
+
     try {
+        msg.innerText = "Authenticating...";
         await signInWithEmailAndPassword(auth, email, password);
     } catch (e) {
-        try { await createUserWithEmailAndPassword(auth, email, password); } 
-        catch (err) { msg.innerText = err.message; }
+        // If user doesn't exist, try creating the account
+        if (e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential') {
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+            } catch (err) { 
+                msg.innerText = "Error: " + err.message; 
+            }
+        } else {
+            msg.innerText = e.message;
+        }
     }
 };
+
+// Also update your HTML button tag to call the correct function name:
+// Find this line in your HTML: 
+// <button class="abtn green" style="width:100%" id="btn-submit">Sign In / Register</button>
+// And change it to:
+// <button class="abtn green" style="width:100%" onclick="emailLogin()">Sign In / Register</button>
 
 window.logout = () => signOut(auth);
 
