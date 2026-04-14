@@ -3,162 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Money Manager | Multi-User SaaS</title>
+    <title>Money Manager Pro | SaaS Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-    
     <style>
         :root {
-            /* Design Reference Colors */
-            --bg: #131417;
-            --card: rgba(30, 32, 38, 0.7);
-            --border: rgba(255, 255, 255, 0.1);
-            --primary: #FF5733; /* Accent from image */
-            --green: #1D9E75;
-            --red: #D85A30;
-            --text: #e2e8f0;
-            --text-dim: #94a3b8;
+            --bg: #0f111a; 
+            --card: rgba(22, 27, 43, 0.8); 
+            --primary: #ff5733; 
+            --green: #10b981; 
+            --red: #ef4444; 
+            --blue: #3b82f6;
+            --text: #e2e8f0; 
+            --border: rgba(255, 255, 255, 0.08);
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: var(--bg); 
-            color: var(--text); 
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-        /* Glassmorphism Layout */
-        .app { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
-        
-        /* Auth Screen */
-        #auth-screen { 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            height: 100vh; background: var(--bg);
-        }
+        /* Splash & Auth */
+        .splash { position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .auth-box { background: var(--card); padding: 2.5rem; border-radius: 24px; border: 1px solid var(--border); width: 100%; max-width: 400px; backdrop-filter: blur(10px); }
 
-        .glass-card {
-            background: var(--card);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Header & Nav */
-        .topbar {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
-        }
-        .logo { font-size: 24px; font-weight: 700; }
+        /* Layout */
+        .app { max-width: 1400px; margin: 0 auto; padding: 1.5rem; display: none; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 1rem; background: var(--card); border-radius: 16px; border: 1px solid var(--border); }
+        .logo { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
         .logo span { color: var(--primary); }
+        .user-pill { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 30px; border: 1px solid var(--border); font-size: 13px; }
+        .user-pill img { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--primary); }
 
-        /* Responsive Grid */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .val { font-size: 28px; font-weight: 700; margin-top: 5px; }
-        .label { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+        /* Metrics */
+        .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .card { background: var(--card); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--border); backdrop-filter: blur(10px); }
+        .label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 600; }
+        .val { font-size: 28px; font-weight: 700; }
 
         /* Buttons */
-        .abtn {
-            padding: 10px 20px; border-radius: 12px; border: none; cursor: pointer;
-            font-weight: 600; transition: 0.3s; font-size: 13px;
-        }
-        .abtn.primary { background: var(--primary); color: white; }
-        .abtn.google { background: #fff; color: #000; }
+        .btn-group { display: flex; gap: 12px; margin-bottom: 2rem; flex-wrap: wrap; }
+        .abtn { padding: 12px 24px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 14px; }
+        .abtn.primary { background: var(--primary); color: #fff; }
+        .abtn.secondary { background: var(--blue); color: #fff; }
+        .abtn.outline { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--border); }
+        .abtn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
 
-        /* Transaction List with Edit Access */
-        .row {
-            display: grid;
-            grid-template-columns: 80px 1fr 120px 100px 60px;
-            gap: 10px; padding: 15px; border-bottom: 1px solid var(--border);
-            align-items: center; transition: background 0.2s;
-        }
-        .row:hover { background: rgba(255,255,255,0.02); }
-        .edit-icon { color: var(--primary); cursor: pointer; font-size: 18px; }
+        /* Table */
+        .table-container { background: var(--card); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; }
+        .row { display: grid; grid-template-columns: 80px 1fr 120px 100px 120px 80px; padding: 15px 20px; border-bottom: 1px solid var(--border); align-items: center; font-size: 14px; }
+        .row.header { background: rgba(255,255,255,0.02); color: #64748b; font-weight: 600; font-size: 11px; text-transform: uppercase; }
+        .row:last-child { border-bottom: none; }
+        .badge { padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
 
-        /* Responsive Mobile Tweak */
-        @media (max-width: 600px) {
-            .row { grid-template-columns: 1fr 100px 40px; }
+        /* Modal */
+        .modal-ov { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(8px); }
+        .modal { background: #161b2b; padding: 2.5rem; border-radius: 24px; border: 1px solid var(--border); width: 100%; max-width: 480px; }
+        .fg { margin-bottom: 1.2rem; }
+        .fg label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 6px; font-weight: 500; }
+        .fg input, .fg select { width: 100%; padding: 12px; background: #0f1117; border: 1px solid var(--border); border-radius: 10px; color: #fff; outline: none; transition: 0.2s; }
+        .fg input:focus { border-color: var(--primary); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .row { grid-template-columns: 70px 1fr 100px 70px; gap: 5px; padding: 12px; }
             .hide-mobile { display: none; }
-            .topbar { flex-direction: column; text-align: center; }
-        }
-
-        /* Admin Badge */
-        .admin-panel {
-            background: rgba(255, 87, 51, 0.1);
-            border: 1px solid var(--primary);
-            padding: 1rem; border-radius: 12px; margin-bottom: 2rem;
+            .metrics { grid-template-columns: 1fr; }
+            .topbar { flex-direction: column; gap: 15px; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-<div id="auth-screen">
-    <div class="glass-card" style="width: 350px; text-align: center;">
-        <h2 style="margin-bottom: 1.5rem;">Welcome</h2>
-        <p style="color: var(--text-dim); margin-bottom: 2rem;">Sign in to manage your money</p>
-        <button class="abtn google" id="btn-login" style="width: 100%;">Continue with Google</button>
+<div id="splash" class="splash">
+    <div class="auth-box">
+        <h1 class="logo" style="font-size: 28px; margin-bottom: 10px;">Money<span>Manager</span></h1>
+        <p style="color: #94a3b8; margin-bottom: 2rem; font-size: 14px;">Your Personal Financial Dashboard</p>
+        <div id="auth-loading" style="color: var(--primary); font-weight: 600;">Connecting...</div>
+        <div id="auth-ui" style="display: none;">
+            <button class="abtn outline" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="googleLogin()">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continue with Google
+            </button>
+        </div>
     </div>
 </div>
 
-<div id="main-app" class="app" style="display: none;">
-    <div class="topbar">
-        <div class="logo">Money<span>Horizon</span></div>
-        <div id="admin-indicator"></div>
-        <div class="nav" style="display: flex; gap: 10px;">
-            <button class="abtn primary" onclick="OM('income')">+ Income</button>
-            <button class="abtn primary" style="background:#3b82f6" onclick="OM('expense')">+ Expense</button>
-            <button class="abtn primary" style="background:#6b7280" onclick="OM('transfer')">⇄ Transfer</button>
-            <button class="abtn" onclick="logout()" style="background: transparent; color: var(--text-dim)">Logout</button>
-        </div>
+<div id="app" class="app">
+    <header class="topbar">
+        <div class="logo">Money<span>Manager</span></div>
+        <div id="admin-tag"></div>
+        <div class="user-pill" id="user-pill"></div>
+    </header>
+
+    <div class="btn-group">
+        <button class="abtn primary" onclick="OM('income')">+ Income</button>
+        <button class="abtn secondary" onclick="OM('expense')">+ Expense</button>
+        <button class="abtn outline" onclick="OM('transfer')">⇄ Transfer Funds</button>
+        <button class="abtn outline" onclick="logout()" style="margin-left: auto;">Sign Out</button>
     </div>
 
-    <div id="admin-view" style="display: none;" class="admin-panel">
-        <h4 style="color: var(--primary); margin-bottom: 10px;">ADMIN PANEL: User Monitoring</h4>
-        <div id="user-list-summary" style="font-size: 12px; display: flex; gap: 20px;"></div>
-    </div>
+    <div class="metrics" id="metrics-view"></div>
 
-    <div class="metrics-grid" id="main-metrics">
+    <div class="table-container">
+        <div class="row header">
+            <span>Date</span><span>Description</span><span class="hide-mobile">Account</span><span class="hide-mobile">Category</span><span>Amount</span><span>Manage</span>
         </div>
-
-    <div class="glass-card">
-        <div class="label" style="margin-bottom: 15px;">Recent Transactions</div>
         <div id="tx-list"></div>
     </div>
 </div>
 
 <div class="modal-ov" id="modal">
-    <div class="modal glass-card" style="width: 400px; background: #1e2026;">
-        <div id="m-title" style="font-weight: 700; margin-bottom: 1rem;">Add Record</div>
-        <input type="hidden" id="m-id"> <div id="m-body"></div>
-        <div style="display: flex; gap: 10px; margin-top: 1.5rem;">
-            <button class="abtn" onclick="CM()" style="flex: 1; background: #333;">Cancel</button>
-            <button class="abtn primary" onclick="saveEntry()" style="flex: 1;">Save Changes</button>
+    <div class="modal">
+        <h3 id="m-title" style="margin-bottom: 1.5rem; font-size: 20px;">Add Record</h3>
+        <input type="hidden" id="m-id">
+        <div id="m-body"></div>
+        <div style="display: flex; gap: 12px; margin-top: 2rem;">
+            <button class="abtn outline" onclick="CM()" style="flex: 1;">Cancel</button>
+            <button class="abtn primary" id="save-btn" onclick="saveEntry()" style="flex: 1;">Save Changes</button>
         </div>
     </div>
 </div>
 
 <script type="module">
-    // Firebase Imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, doc, updateDoc, onSnapshot, query, where, orderBy, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-const firebaseConfig = { 
-  apiKey: "AIzaSyDRErh8H98za0QzYBziRMVfm5dMfAa9MDA",
-  authDomain: "my-money-manager-1dacb.firebaseapp.com",
-  projectId: "my-money-manager-1dacb",
-  storageBucket: "my-money-manager-1dacb.firebasestorage.app",
-  messagingSenderId: "472698368140",
-  appId: "1:472698368140:web:8efd3e38778610099d4ba9"
+const firebaseConfig = {
+    apiKey: "AIzaSyDRErh8H98za0QzYBziRMVfm5dMfAa9MDA",
+    authDomain: "my-money-manager-1dacb.firebaseapp.com",
+    projectId: "my-money-manager-1dacb",
+    storageBucket: "my-money-manager-1dacb.firebasestorage.app",
+    messagingSenderId: "472698368140",
+    appId: "1:472698368140:web:8efd3e38778610099d4ba9"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -166,123 +139,183 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// IMPORTANT: This "catches" the login after you come back from Google
-getRedirectResult(auth).catch((error) => {
-    console.error("Login error:", error);
-});
+// ADMIN REQUIREMENT
+const ADMIN_EMAIL = "saqib77000@gmail.com"; 
+let currentUser = null;
+let txs = [];
+let currentType = 'income';
+
+const BANKS = ['MCB', 'Meezan', 'Faysal', 'Easypaisa', 'Nayapay', 'Sadapay', 'Cash'];
+const BOPT = BANKS.map(b => `<option value="${b}">${b}</option>`).join('');
+
+// --- AUTH HANDLERS ---
+getRedirectResult(auth).catch(e => console.error(e));
 
 onAuthStateChanged(auth, (user) => {
-  if (user) {
-    document.getElementById('splash').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    loadData();
-  } else {
-    document.getElementById('splash').style.display = 'flex';
-    document.getElementById('app').style.display = 'none';
-  }
+    if (user) {
+        currentUser = user;
+        document.getElementById('splash').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        
+        const isAdmin = user.email === ADMIN_EMAIL;
+        document.getElementById('user-pill').innerHTML = `<img src="${user.photoURL}"> <span>${user.displayName}</span>`;
+        if(isAdmin) document.getElementById('admin-tag').innerHTML = `<span class="badge" style="background: rgba(255,87,51,0.2); color: var(--primary)">Administrator</span>`;
+        
+        loadData(isAdmin);
+    } else {
+        document.getElementById('splash').style.display = 'flex';
+        document.getElementById('auth-loading').style.display = 'none';
+        document.getElementById('auth-ui').style.display = 'block';
+    }
 });
 
 window.googleLogin = () => signInWithRedirect(auth, provider);
 window.logout = () => signOut(auth);
 
-// Set the button click in JS to ensure it's bound correctly
-document.getElementById('btn-login').onclick = window.googleLogin;
-    async function initApp() {
-        const isAdmin = user.email === ADMIN_EMAIL;
-        
-        if (isAdmin) {
-            document.getElementById('admin-view').style.display = 'block';
-            document.getElementById('admin-indicator').innerHTML = `<span style="font-size: 10px; background: var(--primary); padding: 4px 8px; border-radius: 20px;">ADMIN MODE</span>`;
-        }
+// --- DATA LOGIC ---
+function loadData(isAdmin) {
+    // ADMIN PANEL REQUIREMENT: Admin sees all, users see own
+    const q = isAdmin 
+        ? query(collection(db, "transactions"), orderBy("date", "desc"))
+        : query(collection(db, "transactions"), where("uid", "==", currentUser.uid), orderBy("date", "desc"));
 
-        // 2. SaaS Logic: User sees their data, Admin sees EVERYTHING
-        const q = isAdmin 
-            ? query(collection(db, "transactions"), orderBy("date", "desc"))
-            : query(collection(db, "transactions"), where("uid", "==", user.uid), orderBy("date", "desc"));
+    onSnapshot(q, (snap) => {
+        txs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderUI();
+    });
+}
 
-        onSnapshot(q, (snapshot) => {
-            allTransactions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            renderAll();
-        });
-    }
+const MODAL_TEMPLATES = {
+    standard: `
+        <div class="fg"><label>Date</label><input type="date" id="m-date"></div>
+        <div class="fg"><label>Bank / Account</label><select id="m-bank">${BOPT}</select></div>
+        <div class="fg"><label>Category</label><input type="text" id="m-cat" placeholder="Salary, Rent, Food..."></div>
+        <div class="fg"><label>Description</label><input type="text" id="m-desc"></div>
+        <div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt" placeholder="0"></div>
+    `,
+    transfer: `
+        <div class="fg"><label>Date</label><input type="date" id="m-date"></div>
+        <div class="fg"><label>From Account</label><select id="m-bank-from">${BOPT}</select></div>
+        <div class="fg"><label>To Account</label><select id="m-bank-to">${BOPT}</select></div>
+        <div class="fg"><label>Description</label><input type="text" id="m-desc" value="Inter-bank Transfer"></div>
+        <div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt" placeholder="0"></div>
+    `
+};
 
-    // 1. Edit Access Function
-    window.editTx = (id) => {
-        const t = allTransactions.find(x => x.id === id);
-        OM(t.type, id);
-    }
-
-    function renderAll() {
-        const list = document.getElementById('tx-list');
-        const metricsEl = document.getElementById('main-metrics');
-        
-        let income = 0, expense = 0;
-        
-        list.innerHTML = allTransactions.map(t => {
-            if (t.type === 'income') income += t.amount;
-            if (t.type === 'expense') expense += t.amount;
-            
-            // 2. Admin Activity Visibility
-            const userTag = user.email === ADMIN_EMAIL ? `<div style="font-size: 9px; color: var(--primary)">User: ${t.userName || 'Unknown'}</div>` : '';
-
-            return `
-                <div class="row">
-                    <span class="hide-mobile">${t.date.slice(5)}</span>
-                    <div>
-                        <div style="font-weight: 600;">${t.desc}</div>
-                        ${userTag}
-                    </div>
-                    <span class="hide-mobile" style="color: var(--text-dim)">${t.account}</span>
-                    <span style="font-weight: 700; color: ${t.type === 'income' ? 'var(--green)' : 'var(--red)'}">
-                        ${t.type === 'income' ? '+' : '-'}${t.amount.toLocaleString()}
-                    </span>
-                    <span class="edit-icon" onclick="editTx('${t.id}')">✎</span>
-                </div>
-            `;
-        }).join('');
-
-        metricsEl.innerHTML = `
-            <div class="glass-card"><div class="label">Total Income</div><div class="val" style="color: var(--green)">PKR ${income.toLocaleString()}</div></div>
-            <div class="glass-card"><div class="label">Total Expenses</div><div class="val" style="color: var(--red)">PKR ${expense.toLocaleString()}</div></div>
-            <div class="glass-card"><div class="label">Net Balance</div><div class="val">PKR ${(income-expense).toLocaleString()}</div></div>
-        `;
-    }
-
-    // Modal & Form Handling
-    const BANKS = ['MCB','Meezan','Faysal','Easypaisa','Nayapay','Cash'];
-    const BOPT = BANKS.map(b => `<option value="${b}">${b}</option>`).join('');
-
-    window.OM = (type, editId = null) => {
-        const modal = document.getElementById('modal');
-        const body = document.getElementById('m-body');
-        document.getElementById('m-id').value = editId || '';
-        
-        let html = `
-            <div class="fg"><label>Date</label><input type="date" id="m-date" style="width:100%; padding:8px; background:#111; border:1px solid #333; color:#fff"></div>
-            <div class="fg"><label>Description</label><input type="text" id="m-desc" placeholder="Salary, Grocery, etc." style="width:100%; padding:8px; background:#111; border:1px solid #333; color:#fff"></div>
-            <div class="fg"><label>Amount</label><input type="number" id="m-amt" placeholder="0" style="width:100%; padding:8px; background:#111; border:1px solid #333; color:#fff"></div>
-        `;
-
-        if (type === 'transfer') {
-            html += `
-                <div class="fg"><label>From Bank</label><select id="m-bank-from" style="width:100%; padding:8px; background:#111; border:1px solid #333; color:#fff">${BOPT}</select></div>
-                <div class="fg"><label>To Bank</label><select id="m-bank-to" style="width:100%; padding:8px; background:#111; border:1px solid #333; color:#fff">${BOPT}</select></div>
-            `;
+window.OM = (type, editId = null) => {
+    currentType = type;
+    document.getElementById('m-title').innerText = (editId ? 'Edit ' : 'Add ') + type.toUpperCase();
+    document.getElementById('m-id').value = editId || '';
+    document.getElementById('m-body').innerHTML = (type === 'transfer') ? MODAL_TEMPLATES.transfer : MODAL_TEMPLATES.standard;
+    
+    if (editId) {
+        const t = txs.find(x => x.id === editId);
+        document.getElementById('m-date').value = t.date;
+        document.getElementById('m-desc').value = t.desc;
+        document.getElementById('m-amt').value = t.amount;
+        if(type === 'transfer') {
+            document.getElementById('m-bank-from').value = t.fromBank;
+            document.getElementById('m-bank-to').value = t.toBank;
         } else {
-            html += `<div class="fg"><label>Account</label><select id="m-bank" style="width:100%; padding:8px; background:#111; border:1px solid #333; color:#fff">${BOPT}</select></div>`;
+            document.getElementById('m-bank').value = t.account;
+            document.getElementById('m-cat').value = t.category;
         }
+    } else {
+        document.getElementById('m-date').value = new Date().toISOString().split('T')[0];
+    }
+    document.getElementById('modal').style.display = 'flex';
+};
 
-        body.innerHTML = html;
-        modal.style.display = 'flex';
+window.CM = () => document.getElementById('modal').style.display = 'none';
 
-        if (editId) {
-            const t = allTransactions.find(x => x.id === editId);
-            document.getElementById('m-date').value = t.date;
-            document.getElementById('m-desc').value = t.desc;
-            document.getElementById('m-amt').value = t.amount;
-        }
+// EDIT & SAVE ACCESS REQUIREMENT
+window.saveEntry = async () => {
+    const id = document.getElementById('m-id').value;
+    const btn = document.getElementById('save-btn');
+    btn.disabled = true;
+
+    const data = {
+        uid: currentUser.uid,
+        userName: currentUser.displayName,
+        userEmail: currentUser.email,
+        date: document.getElementById('m-date').value,
+        desc: document.getElementById('m-desc').value,
+        amount: parseFloat(document.getElementById('m-amt').value),
+        type: currentType
     };
 
-    window.saveEntry = async () => {
-        const id = document.getElementById('m-id').value;
-        const data =
+    if (currentType === 'transfer') {
+        data.fromBank = document.getElementById('m-bank-from').value;
+        data.toBank = document.getElementById('m-bank-to').value;
+        data.category = 'Transfer';
+    } else {
+        data.account = document.getElementById('m-bank').value;
+        data.category = document.getElementById('m-cat').value;
+    }
+
+    try {
+        if (id) await updateDoc(doc(db, "transactions", id), data);
+        else await addDoc(collection(db, "transactions"), data);
+        CM();
+    } catch (e) { alert("Error saving data."); }
+    btn.disabled = false;
+};
+
+window.deleteTx = async (id) => {
+    if (confirm("Delete this record permanently?")) await deleteDoc(doc(db, "transactions", id));
+};
+
+function renderUI() {
+    let inc = 0, exp = 0;
+    const bankBals = {}; BANKS.forEach(b => bankBals[b] = 0);
+
+    const list = txs.map(t => {
+        // TRANSFER RECORD REQUIREMENT
+        if (t.type === 'transfer') {
+            bankBals[t.fromBank] -= t.amount;
+            bankBals[t.toBank] += t.amount;
+        } else {
+            const isInc = t.type === 'income';
+            if (isInc) inc += t.amount; else exp += t.amount;
+            bankBals[t.account] += (isInc ? 1 : -1) * t.amount;
+        }
+
+        const isAdmin = currentUser.email === ADMIN_EMAIL;
+
+        return `
+            <div class="row">
+                <span style="color: #94a3b8">${t.date.slice(5)}</span>
+                <div>
+                    <div style="font-weight: 600;">${t.desc}</div>
+                    ${isAdmin ? `<div style="font-size: 9px; color: var(--primary)">${t.userEmail}</div>` : ''}
+                </div>
+                <span class="hide-mobile" style="color: #94a3b8">${t.type === 'transfer' ? t.fromBank + '→' + t.toBank : t.account}</span>
+                <span class="hide-mobile"><span class="badge" style="background: rgba(255,255,255,0.05)">${t.category}</span></span>
+                <span style="font-weight: 700; color: ${t.type === 'income' ? 'var(--green)' : t.type === 'expense' ? 'var(--red)' : 'var(--blue)'}">
+                    ${t.amount.toLocaleString()}
+                </span>
+                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                    <button class="edit-btn" onclick="OM('${t.type}', '${t.id}')">✏️</button>
+                    <button class="edit-btn" style="color: var(--red)" onclick="deleteTx('${t.id}')">🗑️</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    document.getElementById('tx-list').innerHTML = list || '<div style="padding: 40px; text-align: center; color: #475569;">No records found.</div>';
+    
+    document.getElementById('metrics-view').innerHTML = `
+        <div class="card"><div class="label">Total Income</div><div class="val" style="color: var(--green)">PKR ${inc.toLocaleString()}</div></div>
+        <div class="card"><div class="label">Total Expenses</div><div class="val" style="color: var(--red)">PKR ${exp.toLocaleString()}</div></div>
+        <div class="card"><div class="label">Net Savings</div><div class="val">PKR ${(inc - exp).toLocaleString()}</div></div>
+        ${Object.keys(bankBals).filter(b => bankBals[b] !== 0).map(b => `
+            <div class="card" style="border-left: 3px solid var(--blue)">
+                <div class="label">${b} Balance</div>
+                <div class="val" style="font-size: 18px;">PKR ${bankBals[b].toLocaleString()}</div>
+            </div>
+        `).join('')}
+    `;
+}
+</script>
+</body>
+</html>
