@@ -3,104 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Money Manager Pro — SaaS</title>
+<title>Money Manager Pro — SaaS Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #0f1117;
   --card: #161b27;
   --text: #e2e8f0;
-  --primary: #ff5733; /* Orange Accent from your design ref */
+  --primary: #ff5733; 
   --transfer: #0ea5e9;
   --border: #1e2535;
   --green: #1D9E75;
   --red: #ef4444;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter', sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+body{font-family:'Inter', sans-serif;background:var(--bg);color:var(--text);min-height:100vh; line-height: 1.6}
 .app{max-width:1200px;margin:0 auto;padding:1rem}
 
-/* Topbar & Login */
+/* UI Components */
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding:1rem;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid var(--border);flex-wrap:wrap;gap:10px}
 .logo{font-size:20px;font-weight:700}.logo span{color:var(--primary)}
-.auth-user{display:flex;align-items:center;gap:10px;font-size:12px;color:#94a3b8}
-.auth-user img{width:28px;height:28px;border-radius:50%;border:1px solid var(--primary)}
+.auth-user{display:flex;align-items:center;gap:12px;font-size:12px;}
+.auth-user img{width:32px;height:32px;border-radius:50%;border:2px solid var(--primary)}
 
-/* Navigation */
-.nav{display:flex;gap:5px;overflow-x:auto;padding-bottom:5px}
-.nb{padding:7px 14px;font-size:12px;border:1px solid var(--border);border-radius:8px;background:transparent;color:#94a3b8;cursor:pointer;white-space:nowrap}
+.nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px; margin-bottom: 1rem;}
+.nb{padding:8px 16px;font-size:12px;border:1px solid var(--border);border-radius:10px;background:transparent;color:#94a3b8;cursor:pointer;white-space:nowrap;transition: 0.2s;}
 .nb.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 
-/* Metrics & Cards */
 .mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:1.5rem}
-.m{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px}
-.ml{font-size:11px;color:#64748b;text-transform:uppercase;margin-bottom:5px}
+.m{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px; position: relative; overflow: hidden;}
+.ml{font-size:10px;color:#64748b;text-transform:uppercase;margin-bottom:6px; font-weight: 700; letter-spacing: 0.5px;}
 .mv{font-size:20px;font-weight:700}
 
-/* Transactions & Editing */
-.row{display:grid;gap:8px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px;align-items:center}
-.tx-grid{grid-template-columns:70px 1fr 90px 80px 90px 60px}
-.rh{font-weight:600;color:#475569;text-transform:uppercase;font-size:10px}
-.edit-btn{background:#1e2535;color:#3b82f6;border:none;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:10px}
-.edit-btn:hover{background:#2a3347}
+/* Transaction List */
+.row{display:grid;gap:10px;padding:12px 0;border-bottom:1px solid var(--border);font-size:12px;align-items:center}
+.tx-grid{grid-template-columns:60px 1fr 100px 90px 90px 80px}
+.rh{font-weight:700;color:#475569;text-transform:uppercase;font-size:10px;}
+
+.edit-btn{background:#1e2535;color:#3b82f6;border:none;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:10px; font-weight: 600;}
+.edit-btn:hover{background: #252d3d;}
 
 /* Modals */
-.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:center;justify-content:center}
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;align-items:center;justify-content:center; backdrop-filter: blur(5px);}
 .modal-ov.open{display:flex}
-.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;width:400px;max-width:95vw}
-.fg{margin-bottom:12px}
-.fg label{font-size:11px;color:#94a3b8;display:block;margin-bottom:4px}
-.fg input, .fg select{width:100%;padding:10px;background:#0f1117;border:1px solid var(--border);color:#fff;border-radius:8px;outline:none}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;width:420px;max-width:95vw}
+.fg{margin-bottom:15px}
+.fg label{font-size:11px;color:#94a3b8;display:block;margin-bottom:6px; font-weight: 600;}
+.fg input, .fg select{width:100%;padding:12px;background:#0f1117;border:1px solid var(--border);color:#fff;border-radius:10px;outline:none;}
 
-/* Buttons */
-.abtn{padding:8px 16px;border-radius:8px;cursor:pointer;border:none;font-weight:600;font-size:12px}
+/* Action Buttons */
+.abtn{padding:10px 20px;border-radius:10px;cursor:pointer;border:none;font-weight:700;font-size:13px; transition: 0.2s;}
+.abtn:active{transform: translateY(2px);}
 .green{background:var(--green);color:#fff}
+.blue{background:#3b82f6;color:white}
 .transfer-btn{background:var(--transfer);color:#fff}
-.admin-label{font-size:9px;background:#ef4444;color:white;padding:1px 4px;border-radius:3px;margin-left:5px}
 
-@media(max-width:640px){
-    .tx-grid{grid-template-columns:60px 1fr 80px 50px}
+@media(max-width:768px){
+    .tx-grid{grid-template-columns:55px 1fr 80px 70px; gap: 5px;}
     .hide-mobile{display:none}
 }
 </style>
 </head>
 <body>
 
-<div id="loading-screen" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px">
-    <div class="logo">My <span>Money</span> Manager</div>
-    <div id="auth-action">Loading...</div>
+<div id="loading-screen" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px; background: #0f1117;">
+    <div class="logo" style="font-size: 32px;">My <span>Money</span> Manager</div>
+    <div id="auth-action"><div style="color:#64748b">Syncing with database...</div></div>
 </div>
 
 <div class="app" id="main-app" style="display:none">
   <div class="topbar">
     <div class="logo">My <span>Money</span> Manager</div>
-    <div class="nav">
-      <button class="nb active" onclick="ST('dashboard',this)">Dashboard</button>
-      <button class="nb" onclick="ST('alltx',this)">All Transactions</button>
-    </div>
     <div id="user-info" class="auth-user"></div>
   </div>
 
+  <div class="nav">
+    <button class="nb active" onclick="ST('dashboard',this)">Dashboard</button>
+    <button class="nb" onclick="ST('alltx',this)">Transactions History</button>
+    <button class="nb" style="color:var(--red)" onclick="logout()">Logout</button>
+  </div>
+
   <div id="tab-dashboard" class="tab active">
-    <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+    <div style="display:flex;gap:12px;margin-bottom:25px;flex-wrap:wrap">
         <button class="abtn green" onclick="OM('income')">+ Income</button>
-        <button class="abtn" style="background:#3b82f6;color:white" onclick="OM('expense')">+ Expense</button>
+        <button class="abtn blue" onclick="OM('expense')">+ Expense</button>
         <button class="abtn transfer-btn" onclick="OM('transfer')">⇄ Transfer</button>
-        <button class="abtn" onclick="logout()" style="background:#374151;color:white">Logout</button>
     </div>
 
     <div id="metrics" class="mg"></div>
     
     <div class="m">
-        <div class="ml">Recent Transactions</div>
-        <div class="row rh tx-grid"><span>Date</span><span>Desc</span><span class="hide-mobile">Cat</span><span>Bank</span><span>Amt</span><span>Action</span></div>
+        <div class="ml">Latest Activity</div>
+        <div class="row rh tx-grid"><span>Date</span><span>Description</span><span class="hide-mobile">Category</span><span>Account</span><span>Amount</span><span>Action</span></div>
         <div id="recent-list"></div>
     </div>
   </div>
 
   <div id="tab-alltx" class="tab" style="display:none">
     <div class="m">
-        <div class="ml">Full History</div>
+        <div class="ml">Complete Financial Log</div>
+        <div class="row rh tx-grid"><span>Date</span><span>Description</span><span class="hide-mobile">Category</span><span>Account</span><span>Amount</span><span>Action</span></div>
         <div id="history-list"></div>
     </div>
   </div>
@@ -108,12 +110,12 @@ body{font-family:'Inter', sans-serif;background:var(--bg);color:var(--text);min-
 
 <div class="modal-ov" id="modal">
   <div class="modal">
-    <h3 id="m-title" style="margin-bottom:15px">Action</h3>
+    <h3 id="m-title" style="margin-bottom:20px; font-weight: 700;">Add Entry</h3>
     <input type="hidden" id="m-edit-id">
     <div id="m-body"></div>
-    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:15px">
-        <button onclick="CM()" style="background:transparent;color:#94a3b8;border:none;cursor:pointer">Cancel</button>
-        <button class="abtn green" onclick="saveEntry()">Save Entry</button>
+    <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:25px">
+        <button onclick="CM()" style="background:transparent;color:#94a3b8;border:none;cursor:pointer; font-weight: 600;">Cancel</button>
+        <button class="abtn green" id="save-btn" onclick="saveEntry()">Confirm & Save</button>
     </div>
   </div>
 </div>
@@ -121,7 +123,7 @@ body{font-family:'Inter', sans-serif;background:var(--bg);color:var(--text);min-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, doc, updateDoc, onSnapshot, query, where, orderBy, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDRErh8H98za0QzYBziRMVfm5dMfAa9MDA",
@@ -137,22 +139,31 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-const ADMIN_EMAIL = "saqib77000@gmail.com"; // Set your email here
+// IMPORTANT: Set your admin email here
+const ADMIN_EMAIL = "saqib77000@gmail.com"; 
+
 let currentUser = null;
 let txs = [];
 let currentModal = '';
 
-const BANKS = ['MCB','Meezan','Faysal','Easypaisa','Nayapay','Cash'];
+const BANKS = ['MCB','Meezan','Faysal','Easypaisa','Nayapay','Sadapay','Cash'];
 const BOPT = BANKS.map(b => `<option value="${b}">${b}</option>`).join('');
 
-// Requirement 2: Auth Listener
+getRedirectResult(auth).catch(e => console.error("Redirect Failed:", e));
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
     currentUser = user;
     document.getElementById('loading-screen').style.display = 'none';
     document.getElementById('main-app').style.display = 'block';
-    document.getElementById('user-info').innerHTML = `<img src="${user.photoURL}"> ${user.displayName} ${user.email === ADMIN_EMAIL ? '<span class="admin-badge">ADMIN</span>' : ''}`;
-    loadData();
+    const isAdmin = user.email === ADMIN_EMAIL;
+    document.getElementById('user-info').innerHTML = `
+        <img src="${user.photoURL}"> 
+        <div style="display:flex; flex-direction:column">
+            <span style="font-weight:700; color:#fff">${user.displayName}</span>
+            <span style="font-size:10px; color:${isAdmin ? 'var(--primary)' : '#94a3b8'}">${isAdmin ? 'SYSTEM ADMINISTRATOR' : 'Member'}</span>
+        </div>`;
+    loadData(isAdmin);
   } else {
     document.getElementById('loading-screen').style.display = 'flex';
     document.getElementById('main-app').style.display = 'none';
@@ -160,12 +171,11 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-window.login = () => signInWithPopup(auth, provider);
+window.login = () => signInWithRedirect(auth, provider);
 window.logout = () => signOut(auth);
 
-// Load Multi-user Data
-function loadData() {
-  const q = (currentUser.email === ADMIN_EMAIL)
+function loadData(isAdmin) {
+  const q = isAdmin 
     ? query(collection(db, 'transactions'), orderBy('date', 'desc'))
     : query(collection(db, 'transactions'), where('uid', '==', currentUser.uid), orderBy('date', 'desc'));
 
@@ -176,9 +186,9 @@ function loadData() {
 }
 
 const MODAL_DEFS = {
-  income: { title: 'Add Income', fields: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Bank</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Category</label><input type="text" id="m-cat" value="Salary"></div><div class="fg"><label>Description</label><input type="text" id="m-desc"></div><div class="fg"><label>Amount</label><input type="number" id="m-amt"></div>` },
-  expense: { title: 'Add Expense', fields: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Bank</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Category</label><input type="text" id="m-cat" value="Home"></div><div class="fg"><label>Description</label><input type="text" id="m-desc"></div><div class="fg"><label>Amount</label><input type="number" id="m-amt"></div>` },
-  transfer: { title: 'Bank Transfer', fields: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>From</label><select id="m-bank-from">${BOPT}</select></div><div class="fg"><label>To</label><select id="m-bank-to">${BOPT}</select></div><div class="fg"><label>Description</label><input type="text" id="m-desc" value="Internal Transfer"></div><div class="fg"><label>Amount</label><input type="number" id="m-amt"></div>` }
+  income: { title: 'Add Income', fields: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Account</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Category</label><input type="text" id="m-cat" value="Salary"></div><div class="fg"><label>Description</label><input type="text" id="m-desc"></div><div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt"></div>` },
+  expense: { title: 'Add Expense', fields: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Paid From</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Category</label><input type="text" id="m-cat" value="Personal"></div><div class="fg"><label>Description</label><input type="text" id="m-desc"></div><div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt"></div>` },
+  transfer: { title: 'Bank Transfer', fields: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>From Bank</label><select id="m-bank-from">${BOPT}</select></div><div class="fg"><label>To Bank</label><select id="m-bank-to">${BOPT}</select></div><div class="fg"><label>Description</label><input type="text" id="m-desc" value="Internal Transfer"></div><div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt"></div>` }
 };
 
 window.OM = (type) => {
@@ -192,13 +202,14 @@ window.OM = (type) => {
 
 window.CM = () => document.getElementById('modal').classList.remove('open');
 
-// Requirement 1 & 5: Save & Edit Logic
 window.saveEntry = async () => {
+    const btn = document.getElementById('save-btn');
+    btn.disabled = true; btn.innerText = "Processing...";
     const editId = document.getElementById('m-edit-id').value;
     const data = {
         uid: currentUser.uid,
-        userEmail: currentUser.email,
         userName: currentUser.displayName,
+        userEmail: currentUser.email,
         date: document.getElementById('m-date').value,
         desc: document.getElementById('m-desc').value,
         amount: parseFloat(document.getElementById('m-amt').value)
@@ -215,12 +226,11 @@ window.saveEntry = async () => {
         data.cat = document.getElementById('m-cat').value;
     }
 
-    if(editId) {
-        await updateDoc(doc(db, 'transactions', editId), data);
-    } else {
-        await addDoc(collection(db, 'transactions'), data);
-    }
-    CM();
+    try {
+        editId ? await updateDoc(doc(db, 'transactions', editId), data) : await addDoc(collection(db, 'transactions'), data);
+        CM();
+    } catch(e) { alert("Save Error: Check Console."); }
+    btn.disabled = false; btn.innerText = "Confirm & Save";
 };
 
 window.editTx = (id) => {
@@ -241,40 +251,48 @@ window.editTx = (id) => {
     }, 50);
 };
 
+window.deleteTx = async (id) => {
+    if(confirm("Delete this transaction forever?")) await deleteDoc(doc(db, 'transactions', id));
+};
+
 function renderAll() {
-    const balances = { MCB:0, Meezan:0, Faysal:0, Easypaisa:0, Nayapay:0, Cash:0 };
+    const balances = { MCB:0, Meezan:0, Faysal:0, Easypaisa:0, Nayapay:0, Sadapay:0, Cash:0 };
     let inc = 0, exp = 0;
 
     txs.forEach(t => {
-        // Requirement 5: Transfer Balance Logic
         if(t.type === 'transfer') {
             balances[t.fromBank] -= t.amount;
             balances[t.toBank] += t.amount;
         } else {
-            balances[t.account] += (t.type === 'in' ? 1 : -1) * t.amount;
-            if(t.type === 'in') inc += t.amount; else exp += t.amount;
+            if(balances[t.account] !== undefined) {
+              balances[t.account] += (t.type === 'in' ? 1 : -1) * t.amount;
+              if(t.type === 'in') inc += t.amount; else exp += t.amount;
+            }
         }
     });
 
     document.getElementById('metrics').innerHTML = `
-        <div class="m"><div class="ml">Total Income</div><div class="mv" style="color:var(--green)">PKR ${inc.toLocaleString()}</div></div>
-        <div class="m"><div class="ml">Total Expense</div><div class="mv" style="color:var(--red)">PKR ${exp.toLocaleString()}</div></div>
-        ${Object.keys(balances).map(b => `<div class="m"><div class="ml">${b} Balance</div><div class="mv">${balances[b].toLocaleString()}</div></div>`).join('')}
+        <div class="m"><div class="ml">Net Income</div><div class="mv" style="color:var(--green)">PKR ${inc.toLocaleString()}</div></div>
+        <div class="m"><div class="ml">Total Spent</div><div class="mv" style="color:var(--red)">PKR ${exp.toLocaleString()}</div></div>
+        ${Object.keys(balances).map(b => `<div class="m"><div class="ml">${b}</div><div class="mv">${balances[b].toLocaleString()}</div></div>`).join('')}
     `;
 
-    const listHtml = txs.slice(0, 15).map(t => `
+    const isAdmin = currentUser.email === ADMIN_EMAIL;
+    const generateRow = t => `
         <div class="row tx-grid">
-            <span>${t.date.slice(5)}</span>
-            <span style="font-size:10px">${t.desc} ${currentUser.email === ADMIN_EMAIL ? `<br><small style="color:var(--primary)">${t.userName}</small>` : ''}</span>
+            <span>${t.date.split('-').slice(1).join('/')}</span>
+            <span style="font-size:11px; font-weight:500">${t.desc} ${isAdmin ? `<br><small style="color:var(--primary)">${t.userName}</small>` : ''}</span>
             <span class="hide-mobile">${t.cat}</span>
-            <span>${t.type === 'transfer' ? t.fromBank+'→'+t.toBank : t.account}</span>
-            <span style="color:${t.type==='in'?'var(--green)':'var(--red)'}">${t.amount}</span>
-            <button class="edit-btn" onclick="editTx('${t.id}')">Edit</button>
-        </div>
-    `).join('');
+            <span style="color:#94a3b8">${t.type === 'transfer' ? t.fromBank+'→'+t.toBank : t.account}</span>
+            <span style="font-weight:700; color:${t.type==='in'?'var(--green)':'var(--red)'}">${t.amount.toLocaleString()}</span>
+            <div style="display:flex; gap:6px">
+                <button class="edit-btn" onclick="editTx('${t.id}')">Edit</button>
+                <button class="edit-btn" style="color:var(--red)" onclick="deleteTx('${t.id}')">✕</button>
+            </div>
+        </div>`;
     
-    document.getElementById('recent-list').innerHTML = listHtml;
-    document.getElementById('history-list').innerHTML = listHtml;
+    document.getElementById('recent-list').innerHTML = txs.slice(0, 15).map(generateRow).join('');
+    document.getElementById('history-list').innerHTML = txs.map(generateRow).join('');
 }
 
 window.ST = (t, b) => {
