@@ -3,168 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Money Manager | Simple Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Money Manager Pro | SaaS Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f111a; --card: #161b2b; --primary: #ff5733; --text: #e2e8f0; --border: #1e2535;
+            --bg: #0f111a; --card: #161b2b; --primary: #ff5733; --green: #10b981; 
+            --red: #ef4444; --text: #e2e8f0; --border: #1e2535; --blue: #3b82f6;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+        .app { max-width: 1200px; margin: 0 auto; padding: 1rem; }
 
-        /* Simple Auth UI */
+        /* Auth Screen */
         .auth-container { display: flex; align-items: center; justify-content: center; height: 100vh; padding: 20px; }
-        .auth-card { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid var(--border); width: 100%; max-width: 400px; text-align: center; }
-        .input-group { margin-bottom: 15px; text-align: left; }
-        .input-group label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
-        .auth-input { width: 100%; padding: 12px; background: #0f1117; border: 1px solid var(--border); border-radius: 10px; color: #fff; outline: none; }
+        .auth-card { background: var(--card); padding: 35px; border-radius: 24px; border: 1px solid var(--border); width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .auth-input { width: 100%; padding: 12px; background: #0f1117; border: 1px solid var(--border); border-radius: 12px; color: #fff; margin-bottom: 15px; outline: none; }
         .auth-input:focus { border-color: var(--primary); }
+
+        /* Header & Nav */
+        .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--border); flex-wrap: wrap; gap: 10px; }
+        .logo { font-size: 22px; font-weight: 700; } .logo span { color: var(--primary); }
+        .nav { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; margin-bottom: 1.5rem; }
+        .nb { padding: 8px 16px; font-size: 12px; border: 1px solid var(--border); border-radius: 10px; background: transparent; color: #94a3b8; cursor: pointer; white-space: nowrap; transition: 0.2s; }
+        .nb.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .tab { display: none; } .tab.active { display: block; }
+
+        /* Metrics & Cards */
+        .mg { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+        .m { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 18px; }
+        .ml { font-size: 11px; color: #64748b; text-transform: uppercase; margin-bottom: 6px; font-weight: 600; }
+        .mv { font-size: 20px; font-weight: 700; }
+
+        /* Transactions */
+        .row { display: grid; grid-template-columns: 60px 1fr 100px 80px 90px 80px; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 13px; align-items: center; }
+        .rh { font-weight: 700; color: #475569; text-transform: uppercase; font-size: 10px; }
+        .edit-btn { background: #1e2535; color: #3b82f6; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 10px; font-weight: 600; }
         
-        .abtn { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; transition: 0.2s; }
-        .primary { background: var(--primary); color: #fff; margin-top: 10px; }
-        
-        /* Dashboard placeholder - using your previous structure */
-        #app { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .logout-btn { background: transparent; color: #94a3b8; border: 1px solid var(--border); padding: 8px 15px; border-radius: 8px; cursor: pointer; }
+        /* Modals */
+        .modal-ov { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 500; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal-ov.open { display: flex; }
+        .modal { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; width: 420px; max-width: 95vw; }
+        .fg { margin-bottom: 15px; }
+        .fg label { font-size: 11px; color: #94a3b8; display: block; margin-bottom: 6px; }
+        .fg input, .fg select { width: 100%; padding: 12px; background: #0f1117; border: 1px solid var(--border); color: #fff; border-radius: 10px; outline: none; }
+
+        .abtn { padding: 10px 20px; border-radius: 10px; cursor: pointer; border: none; font-weight: 700; font-size: 13px; }
+        .green { background: var(--green); color: #fff; }
+        .blue { background: var(--blue); color: #fff; }
+
+        @media(max-width: 768px) {
+            .row { grid-template-columns: 55px 1fr 80px 70px; }
+            .hide-mobile { display: none; }
+        }
     </style>
 </head>
 <body>
 
 <div id="auth-screen" class="auth-container">
     <div class="auth-card">
-        <h2 style="margin-bottom: 10px;">Money<span>Manager</span></h2>
-        <p style="font-size: 14px; color: #94a3b8; margin-bottom: 25px;">Enter details to Login or Sign Up</p>
-        
-        <div class="input-group">
-            <label>Email Address</label>
-            <input type="email" id="auth-email" class="auth-input" placeholder="name@example.com">
-        </div>
-        <div class="input-group" style="margin-bottom: 20px;">
-            <label>Password</label>
-            <input type="password" id="auth-pw" class="auth-input" placeholder="••••••••">
-        </div>
-        
-        <button class="abtn primary" id="btn-submit">Sign In / Register</button>
-        <div id="auth-msg" style="margin-top: 15px; font-size: 12px; color: #ef4444;"></div>
+        <h2 class="logo" style="margin-bottom: 10px;">Money<span>Manager</span></h2>
+        <p style="font-size: 14px; color: #94a3b8; margin-bottom: 25px;">Secure Financial Access</p>
+        <input type="email" id="auth-email" class="auth-input" placeholder="Email Address">
+        <input type="password" id="auth-pw" class="auth-input" placeholder="Password">
+        <button class="abtn green" style="width:100%" id="btn-submit">Sign In / Register</button>
+        <div id="auth-msg" style="margin-top: 15px; font-size: 12px; color: var(--red);"></div>
     </div>
 </div>
 
-<div id="app">
-    <div class="header">
-        <h2 id="welcome-text">Dashboard</h2>
-        <button class="logout-btn" onclick="logout()">Logout</button>
-    </div>
-    
-    <div id="admin-notice" style="display:none; color: #ff5733; margin-bottom: 20px; font-weight: bold;">
-        ADMINISTRATOR ACCESS GRANTED
+<div class="app" id="main-app" style="display:none">
+    <div class="topbar">
+        <div class="logo">Money<span>Manager</span></div>
+        <div id="user-info" style="font-size: 12px; color: #94a3b8;"></div>
+        <button class="nb" style="color: var(--red);" onclick="logout()">Logout</button>
     </div>
 
-    <div id="metrics-view" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;"></div>
-    
-    <div id="tx-list" style="margin-top: 30px; background: var(--card); border-radius: 15px; border: 1px solid var(--border); padding: 20px;">
-        Loading transactions...
+    <div class="nav">
+        <button class="nb active" onclick="ST('dashboard',this)">Dashboard</button>
+        <button class="nb" onclick="ST('alltx',this)">History</button>
+    </div>
+
+    <div id="tab-dashboard" class="tab active">
+        <div style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap">
+            <button class="abtn green" onclick="OM('income')">+ Income</button>
+            <button class="abtn blue" onclick="OM('expense')">+ Expense</button>
+            <button class="abtn" style="background:var(--primary); color:white;" onclick="OM('transfer')">⇄ Transfer</button>
+        </div>
+
+        <div id="metrics" class="mg"></div>
+        
+        <div class="m">
+            <div class="ml">Recent Activity</div>
+            <div class="row rh"><span>Date</span><span>Description</span><span class="hide-mobile">Category</span><span>Bank</span><span>Amount</span><span>Action</span></div>
+            <div id="recent-list"></div>
+        </div>
+    </div>
+
+    <div id="tab-alltx" class="tab">
+        <div class="m">
+            <div class="ml">Full Transaction Log</div>
+            <div id="history-list"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-ov" id="modal">
+    <div class="modal">
+        <h3 id="m-title" style="margin-bottom:20px;">Add Record</h3>
+        <input type="hidden" id="m-edit-id">
+        <div id="m-body"></div>
+        <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px">
+            <button onclick="CM()" style="background:transparent; color:#94a3b8; border:none; cursor:pointer;">Cancel</button>
+            <button class="abtn green" onclick="saveEntry()">Save Entry</button>
+        </div>
     </div>
 </div>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, doc, updateDoc, onSnapshot, query, where, orderBy, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, doc, updateDoc, onSnapshot, query, where, orderBy, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDRErh8H98za0QzYBziRMVfm5dMfAa9MDA",
-        authDomain: "my-money-manager-1dacb.firebaseapp.com",
-        projectId: "my-money-manager-1dacb",
-        storageBucket: "my-money-manager-1dacb.firebasestorage.app",
-        messagingSenderId: "472698368140",
-        appId: "1:472698368140:web:8efd3e38778610099d4ba9"
+const firebaseConfig = {
+    apiKey: "AIzaSyDRErh8H98za0QzYBziRMVfm5dMfAa9MDA",
+    authDomain: "my-money-manager-1dacb.firebaseapp.com",
+    projectId: "my-money-manager-1dacb",
+    storageBucket: "my-money-manager-1dacb.firebasestorage.app",
+    messagingSenderId: "472698368140",
+    appId: "1:472698368140:web:8efd3e38778610099d4ba9"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+const ADMIN_EMAIL = "saqib77000@gmail.com";
+let currentUser = null;
+let txs = [];
+let currentModalType = '';
+
+const BANKS = ['MCB','Meezan','Faysal','Easypaisa','Nayapay','Sadapay','Cash'];
+const BOPT = BANKS.map(b => `<option value="${b}">${b}</option>`).join('');
+
+// --- AUTH LOGIC ---
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        currentUser = user;
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('main-app').style.display = 'block';
+        document.getElementById('user-info').innerHTML = user.email + (user.email === ADMIN_EMAIL ? " <b>(ADMIN)</b>" : "");
+        loadData(user.email === ADMIN_EMAIL);
+    } else {
+        document.getElementById('auth-screen').style.display = 'flex';
+        document.getElementById('main-app').style.display = 'none';
+    }
+});
+
+document.getElementById('btn-submit').onclick = async () => {
+    const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-pw').value;
+    const msg = document.getElementById('auth-msg');
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+    } catch (e) {
+        try { await createUserWithEmailAndPassword(auth, email, password); } 
+        catch (err) { msg.innerText = err.message; }
+    }
+};
+
+window.logout = () => signOut(auth);
+
+// --- DATA LOGIC ---
+function loadData(isAdmin) {
+    const q = isAdmin 
+        ? query(collection(db, "transactions"), orderBy("date", "desc"))
+        : query(collection(db, "transactions"), where("uid", "==", currentUser.uid), orderBy("date", "desc"));
+
+    onSnapshot(q, (snap) => {
+        txs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderAll();
+    });
+}
+
+const MODAL_DEFS = {
+    income: { title: 'Add Income', html: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Bank</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Category</label><input type="text" id="m-cat" value="Salary"></div><div class="fg"><label>Description</label><input type="text" id="m-desc"></div><div class="fg"><label>Amount</label><input type="number" id="m-amt"></div>` },
+    expense: { title: 'Add Expense', html: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Bank</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Category</label><input type="text" id="m-cat" value="Food"></div><div class="fg"><label>Description</label><input type="text" id="m-desc"></div><div class="fg"><label>Amount</label><input type="number" id="m-amt"></div>` },
+    transfer: { title: 'Bank Transfer', html: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>From Bank</label><select id="m-bank-from">${BOPT}</select></div><div class="fg"><label>To Bank</label><select id="m-bank-to">${BOPT}</select></div><div class="fg"><label>Description</label><input type="text" id="m-desc" value="Internal Transfer"></div><div class="fg"><label>Amount</label><input type="number" id="m-amt"></div>` }
+};
+
+window.OM = (type, editId = null) => {
+    currentModalType = type;
+    document.getElementById('m-title').innerText = (editId ? 'Edit ' : 'Add ') + type.toUpperCase();
+    document.getElementById('m-body').innerHTML = MODAL_DEFS[type].html;
+    document.getElementById('m-edit-id').value = editId || '';
+    if(!editId) document.getElementById('m-date').value = new Date().toISOString().split('T')[0];
+    else {
+        const t = txs.find(x => x.id === editId);
+        document.getElementById('m-date').value = t.date;
+        document.getElementById('m-desc').value = t.desc;
+        document.getElementById('m-amt').value = t.amount;
+        if(type === 'transfer') {
+            document.getElementById('m-bank-from').value = t.fromBank;
+            document.getElementById('m-bank-to').value = t.toBank;
+        } else {
+            document.getElementById('m-bank').value = t.account;
+            document.getElementById('m-cat').value = t.cat;
+        }
+    }
+    document.getElementById('modal').classList.add('open');
+};
+
+window.CM = () => document.getElementById('modal').classList.remove('open');
+
+window.saveEntry = async () => {
+    const editId = document.getElementById('m-edit-id').value;
+    const data = {
+        uid: currentUser.uid, userEmail: currentUser.email,
+        date: document.getElementById('m-date').value,
+        desc: document.getElementById('m-desc').value,
+        amount: parseFloat(document.getElementById('m-amt').value),
+        type: currentModalType === 'income' ? 'in' : (currentModalType === 'expense' ? 'out' : 'transfer')
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
+    if(currentModalType === 'transfer') {
+        data.fromBank = document.getElementById('m-bank-from').value;
+        data.toBank = document.getElementById('m-bank-to').value;
+        data.cat = 'Transfer';
+    } else {
+        data.account = document.getElementById('m-bank').value;
+        data.cat = document.getElementById('m-cat').value;
+    }
 
-    const ADMIN_EMAIL = "saqib77000@gmail.com";
+    if(editId) await updateDoc(doc(db, "transactions", editId), data);
+    else await addDoc(collection(db, "transactions"), data);
+    CM();
+};
 
-    // 1. Auth Listener (Direct & Simple)
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            document.getElementById('auth-screen').style.display = 'none';
-            document.getElementById('app').style.display = 'block';
-            document.getElementById('welcome-text').innerText = "Welcome, " + user.email.split('@')[0];
-            
-            const isAdmin = user.email === ADMIN_EMAIL;
-            if(isAdmin) document.getElementById('admin-notice').style.display = 'block';
-            
-            loadData(isAdmin, user.uid);
+window.deleteTx = async (id) => {
+    if(confirm("Delete this transaction?")) await deleteDoc(doc(db, "transactions", id));
+};
+
+function renderAll() {
+    const balances = { MCB:0, Meezan:0, Faysal:0, Easypaisa:0, Nayapay:0, Sadapay:0, Cash:0 };
+    let inc = 0, exp = 0;
+
+    txs.forEach(t => {
+        if(t.type === 'transfer') {
+            balances[t.fromBank] -= t.amount;
+            balances[t.toBank] += t.amount;
         } else {
-            document.getElementById('auth-screen').style.display = 'flex';
-            document.getElementById('app').style.display = 'none';
+            balances[t.account] += (t.type === 'in' ? 1 : -1) * t.amount;
+            if(t.type === 'in') inc += t.amount; else exp += t.amount;
         }
     });
 
-    // 2. Combined Login/Signup Function
-    document.getElementById('btn-submit').onclick = async () => {
-        const email = document.getElementById('auth-email').value;
-        const password = document.getElementById('auth-pw').value;
-        const msg = document.getElementById('auth-msg');
-        
-        if(!email || !password) {
-            msg.innerText = "Please fill all fields.";
-            return;
-        }
+    document.getElementById('metrics').innerHTML = `
+        <div class="m"><div class="ml">Total Income</div><div class="mv" style="color:var(--green)">PKR ${inc.toLocaleString()}</div></div>
+        <div class="m"><div class="ml">Total Expense</div><div class="mv" style="color:var(--red)">PKR ${exp.toLocaleString()}</div></div>
+        ${Object.keys(balances).map(b => `<div class="m"><div class="ml">${b} Balance</div><div class="mv">${balances[b].toLocaleString()}</div></div>`).join('')}
+    `;
 
-        try {
-            msg.style.color = "#ff5733";
-            msg.innerText = "Authenticating...";
-            await signInWithEmailAndPassword(auth, email, password);
-        } catch (error) {
-            // If user doesn't exist, try creating account
-            if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
-                try {
-                    await createUserWithEmailAndPassword(auth, email, password);
-                } catch (signUpError) {
-                    msg.innerText = "Error: " + signUpError.message;
-                }
-            } else {
-                msg.innerText = error.message;
-            }
-        }
-    };
-
-    window.logout = () => signOut(auth);
-
-    // 3. Load Data with SaaS Isolation
-    function loadData(isAdmin, uid) {
-        const q = isAdmin 
-            ? query(collection(db, "transactions"), orderBy("date", "desc"))
-            : query(collection(db, "transactions"), where("uid", "==", uid), orderBy("date", "desc"));
-
-        onSnapshot(q, (snap) => {
-            const txs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            renderTable(txs, isAdmin);
-        });
-    }
-
-    function renderTable(txs, isAdmin) {
-        const list = document.getElementById('tx-list');
-        if(txs.length === 0) {
-            list.innerHTML = "No transactions found. Add some to get started.";
-            return;
-        }
-
-        list.innerHTML = txs.map(t => `
-            <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1e2535; font-size: 13px;">
-                <span>${t.date}</span>
-                <div style="flex: 1; margin: 0 15px;">
-                    <strong>${t.desc}</strong>
-                    ${isAdmin ? `<br><small style="color: #ff5733">${t.userEmail || 'User'}</small>` : ''}
-                </div>
-                <span style="color: ${t.type === 'income' ? '#10b981' : '#ef4444'}">PKR ${t.amount.toLocaleString()}</span>
+    const isAdmin = currentUser.email === ADMIN_EMAIL;
+    const listHtml = txs.map(t => `
+        <div class="row">
+            <span>${t.date.slice(5)}</span>
+            <span style="font-weight:600">${t.desc} ${isAdmin ? `<br><small style="color:var(--primary)">${t.userEmail}</small>` : ''}</span>
+            <span class="hide-mobile">${t.cat}</span>
+            <span>${t.type === 'transfer' ? t.fromBank+'→'+t.toBank : t.account}</span>
+            <span style="color:${t.type==='in'?'var(--green)':'var(--red)'}">${t.amount.toLocaleString()}</span>
+            <div style="display:flex; gap:5px">
+                <button class="edit-btn" onclick="OM('${t.type === 'transfer' ? 'transfer' : (t.type === 'in' ? 'income' : 'expense')}', '${t.id}')">Edit</button>
+                <button class="edit-btn" style="color:var(--red)" onclick="deleteTx('${t.id}')">✕</button>
             </div>
-        `).join('');
-    }
-</script>
-</body>
-</html>
+        </div>
+    `).join('');
+    
+    document.getElementById('recent-list').innerHTML = listHtml;
+    document.getElementById('history-list').innerHTML = listHtml;
+}
+
+window.ST = (t, b) => {
+    document.querySelectorAll('.tab').forEach(x => x.style.display = 'none
