@@ -3,304 +3,274 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Money Manager Pro — SaaS Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Pro Money Manager | SaaS Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0f1117;
-  --card: #161b27;
-  --text: #e2e8f0;
-  --primary: #ff5733; 
-  --transfer: #0ea5e9;
-  --border: #1e2535;
-  --green: #1D9E75;
-  --red: #ef4444;
+    --bg: #0f111a; --card: #161b2b; --primary: #ff5733; --green: #10b981; 
+    --red: #ef4444; --text: #e2e8f0; --border: #1e2535; --glass: rgba(255, 255, 255, 0.03);
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter', sans-serif;background:var(--bg);color:var(--text);min-height:100vh; line-height: 1.6}
-.app{max-width:1200px;margin:0 auto;padding:1rem}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-/* UI Components */
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding:1rem;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid var(--border);flex-wrap:wrap;gap:10px}
-.logo{font-size:20px;font-weight:700}.logo span{color:var(--primary)}
-.auth-user{display:flex;align-items:center;gap:12px;font-size:12px;}
-.auth-user img{width:32px;height:32px;border-radius:50%;border:2px solid var(--primary)}
+/* Auth & Splash */
+.splash { position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.auth-card { background: var(--card); padding: 2rem; border-radius: 20px; border: 1px solid var(--border); width: 350px; text-align: center; }
+.auth-input { width: 100%; padding: 12px; margin: 10px 0; background: #0f1117; border: 1px solid var(--border); border-radius: 8px; color: #fff; }
 
-.nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px; margin-bottom: 1rem;}
-.nb{padding:8px 16px;font-size:12px;border:1px solid var(--border);border-radius:10px;background:transparent;color:#94a3b8;cursor:pointer;white-space:nowrap;transition: 0.2s;}
-.nb.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+/* Header & Nav */
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background: var(--glass); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
+.logo { font-size: 22px; font-weight: 700; color: var(--text); }
+.logo span { color: var(--primary); }
+.user-info { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.user-info img { width: 32px; border-radius: 50%; border: 2px solid var(--primary); }
 
-.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:1.5rem}
-.m{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px; position: relative; overflow: hidden;}
-.ml{font-size:10px;color:#64748b;text-transform:uppercase;margin-bottom:6px; font-weight: 700; letter-spacing: 0.5px;}
-.mv{font-size:20px;font-weight:700}
-
-/* Transaction List */
-.row{display:grid;gap:10px;padding:12px 0;border-bottom:1px solid var(--border);font-size:12px;align-items:center}
-.tx-grid{grid-template-columns:60px 1fr 100px 90px 90px 80px}
-.rh{font-weight:700;color:#475569;text-transform:uppercase;font-size:10px;}
-
-.edit-btn{background:#1e2535;color:#3b82f6;border:none;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:10px; font-weight: 600;}
-.edit-btn:hover{background: #252d3d;}
-
-/* Modals */
-.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;align-items:center;justify-content:center; backdrop-filter: blur(5px);}
-.modal-ov.open{display:flex}
-.modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;width:420px;max-width:95vw}
-.fg{margin-bottom:15px}
-.fg label{font-size:11px;color:#94a3b8;display:block;margin-bottom:6px; font-weight: 600;}
-.fg input, .fg select{width:100%;padding:12px;background:#0f1117;border:1px solid var(--border);color:#fff;border-radius:10px;outline:none;}
+/* Layout Grid */
+.app-content { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+.metric-card { background: var(--card); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border); position: relative; }
+.metric-card .label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+.metric-card .val { font-size: 26px; font-weight: 700; margin-top: 5px; }
 
 /* Action Buttons */
-.abtn{padding:10px 20px;border-radius:10px;cursor:pointer;border:none;font-weight:700;font-size:13px; transition: 0.2s;}
-.abtn:active{transform: translateY(2px);}
-.green{background:var(--green);color:#fff}
-.blue{background:#3b82f6;color:white}
-.transfer-btn{background:var(--transfer);color:#fff}
+.btn-row { display: flex; gap: 10px; margin-bottom: 2rem; flex-wrap: wrap; }
+.abtn { padding: 10px 20px; border-radius: 10px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 13px; }
+.abtn.primary { background: var(--primary); color: #fff; }
+.abtn.outline { background: transparent; border: 1px solid var(--border); color: #94a3b8; }
 
-@media(max-width:768px){
-    .tx-grid{grid-template-columns:55px 1fr 80px 70px; gap: 5px;}
-    .hide-mobile{display:none}
+/* Transactions Table */
+.data-table { background: var(--card); border-radius: 16px; border: 1px solid var(--border); padding: 1rem; overflow-x: auto; }
+.row { display: grid; grid-template-columns: 80px 1fr 100px 100px 120px 80px; padding: 12px; border-bottom: 1px solid var(--border); align-items: center; font-size: 13px; }
+.row.header { color: #64748b; font-weight: 600; font-size: 11px; text-transform: uppercase; }
+.action-icons { display: flex; gap: 10px; justify-content: flex-end; }
+.icon-btn { background: none; border: none; cursor: pointer; font-size: 16px; filter: grayscale(1); }
+.icon-btn:hover { filter: grayscale(0); transform: scale(1.1); }
+
+/* Modals */
+.modal-ov { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 500; align-items: center; justify-content: center; padding: 1rem; }
+.modal { background: var(--card); padding: 2rem; border-radius: 20px; border: 1px solid var(--border); width: 100%; max-width: 450px; }
+.fg { margin-bottom: 15px; }
+.fg label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
+.fg input, .fg select { width: 100%; padding: 12px; background: #0f1117; border: 1px solid var(--border); border-radius: 8px; color: #fff; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .row { grid-template-columns: 80px 1fr 80px 60px; }
+    .hide-mobile { display: none; }
 }
 </style>
 </head>
 <body>
 
-<div id="loading-screen" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px; background: #0f1117;">
-    <div class="logo" style="font-size: 32px;">My <span>Money</span> Manager</div>
-    <div id="auth-action"><div style="color:#64748b">Syncing with database...</div></div>
+<div id="splash" class="splash">
+    <div class="auth-card" id="auth-ui">
+        <h2 style="margin-bottom:20px">My <span>Money</span> Manager</h2>
+        <div id="login-form">
+            <input type="email" id="email" class="auth-input" placeholder="Email Address">
+            <input type="password" id="pw" class="auth-input" placeholder="Password">
+            <button class="abtn primary" style="width:100%; margin-top:10px" onclick="emailLogin()">Login / Sign Up</button>
+            <div style="margin: 15px 0; color:#64748b">OR</div>
+            <button class="abtn outline" style="width:100%" onclick="googleLogin()">Continue with Google</button>
+        </div>
+    </div>
 </div>
 
-<div class="app" id="main-app" style="display:none">
-  <div class="topbar">
-    <div class="logo">My <span>Money</span> Manager</div>
-    <div id="user-info" class="auth-user"></div>
-  </div>
+<div id="app" style="display:none">
+    <header class="topbar">
+        <div class="logo">Money <span>Manager</span></div>
+        <div class="user-info" id="user-header"></div>
+    </header>
 
-  <div class="nav">
-    <button class="nb active" onclick="ST('dashboard',this)">Dashboard</button>
-    <button class="nb" onclick="ST('alltx',this)">Transactions History</button>
-    <button class="nb" style="color:var(--red)" onclick="logout()">Logout</button>
-  </div>
+    <main class="app-content">
+        <div class="btn-row">
+            <button class="abtn primary" onclick="OM('income')">+ Income</button>
+            <button class="abtn primary" style="background:#3b82f6" onclick="OM('expense')">+ Expense</button>
+            <button class="abtn outline" onclick="OM('transfer')">⇄ Transfer</button>
+            <button class="abtn outline" style="margin-left:auto" onclick="logout()">Logout</button>
+        </div>
 
-  <div id="tab-dashboard" class="tab active">
-    <div style="display:flex;gap:12px;margin-bottom:25px;flex-wrap:wrap">
-        <button class="abtn green" onclick="OM('income')">+ Income</button>
-        <button class="abtn blue" onclick="OM('expense')">+ Expense</button>
-        <button class="abtn transfer-btn" onclick="OM('transfer')">⇄ Transfer</button>
-    </div>
+        <div class="metrics-grid" id="metrics"></div>
 
-    <div id="metrics" class="mg"></div>
-    
-    <div class="m">
-        <div class="ml">Latest Activity</div>
-        <div class="row rh tx-grid"><span>Date</span><span>Description</span><span class="hide-mobile">Category</span><span>Account</span><span>Amount</span><span>Action</span></div>
-        <div id="recent-list"></div>
-    </div>
-  </div>
-
-  <div id="tab-alltx" class="tab" style="display:none">
-    <div class="m">
-        <div class="ml">Complete Financial Log</div>
-        <div class="row rh tx-grid"><span>Date</span><span>Description</span><span class="hide-mobile">Category</span><span>Account</span><span>Amount</span><span>Action</span></div>
-        <div id="history-list"></div>
-    </div>
-  </div>
+        <div class="data-table">
+            <div class="row header">
+                <span>Date</span><span>Description</span><span class="hide-mobile">Account</span><span class="hide-mobile">Category</span><span>Amount</span><span>Actions</span>
+            </div>
+            <div id="tx-list"></div>
+        </div>
+    </main>
 </div>
 
 <div class="modal-ov" id="modal">
-  <div class="modal">
-    <h3 id="m-title" style="margin-bottom:20px; font-weight: 700;">Add Entry</h3>
-    <input type="hidden" id="m-edit-id">
-    <div id="m-body"></div>
-    <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:25px">
-        <button onclick="CM()" style="background:transparent;color:#94a3b8;border:none;cursor:pointer; font-weight: 600;">Cancel</button>
-        <button class="abtn green" id="save-btn" onclick="saveEntry()">Confirm & Save</button>
+    <div class="modal">
+        <h3 id="m-title" style="margin-bottom:20px">Add Transaction</h3>
+        <input type="hidden" id="m-id">
+        <div id="m-body"></div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px">
+            <button class="abtn outline" onclick="CM()">Cancel</button>
+            <button class="abtn primary" onclick="saveEntry()">Save Entry</button>
+        </div>
     </div>
-  </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, doc, updateDoc, onSnapshot, query, where, orderBy, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDRErh8H98za0QzYBziRMVfm5dMfAa9MDA",
-  authDomain: "my-money-manager-1dacb.firebaseapp.com",
-  projectId: "my-money-manager-1dacb",
-  storageBucket: "my-money-manager-1dacb.firebasestorage.app",
-  messagingSenderId: "472698368140",
-  appId: "1:472698368140:web:8efd3e38778610099d4ba9"
-};
-
+const firebaseConfig = { /* PASTE YOUR CONFIG HERE */ };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// IMPORTANT: Set your admin email here
-const ADMIN_EMAIL = "saqib77000@gmail.com"; 
-
+const ADMIN_EMAIL = "your-email@gmail.com"; // Your email
 let currentUser = null;
 let txs = [];
-let currentModal = '';
+let currentType = 'income';
 
 const BANKS = ['MCB','Meezan','Faysal','Easypaisa','Nayapay','Sadapay','Cash'];
 const BOPT = BANKS.map(b => `<option value="${b}">${b}</option>`).join('');
 
-getRedirectResult(auth).catch(e => console.error("Redirect Failed:", e));
-
+// --- AUTH LOGIC ---
 onAuthStateChanged(auth, (user) => {
-  if (user) {
-    currentUser = user;
-    document.getElementById('loading-screen').style.display = 'none';
-    document.getElementById('main-app').style.display = 'block';
-    const isAdmin = user.email === ADMIN_EMAIL;
-    document.getElementById('user-info').innerHTML = `
-        <img src="${user.photoURL}"> 
-        <div style="display:flex; flex-direction:column">
-            <span style="font-weight:700; color:#fff">${user.displayName}</span>
-            <span style="font-size:10px; color:${isAdmin ? 'var(--primary)' : '#94a3b8'}">${isAdmin ? 'SYSTEM ADMINISTRATOR' : 'Member'}</span>
-        </div>`;
-    loadData(isAdmin);
-  } else {
-    document.getElementById('loading-screen').style.display = 'flex';
-    document.getElementById('main-app').style.display = 'none';
-    document.getElementById('auth-action').innerHTML = `<button class="abtn green" onclick="window.login()">Login with Google</button>`;
-  }
+    if (user) {
+        currentUser = user;
+        document.getElementById('splash').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('user-header').innerHTML = `
+            <span>${user.email}</span>
+            <img src="${user.photoURL || 'https://via.placeholder.com/32'}" alt="profile">
+        `;
+        loadData();
+    } else {
+        document.getElementById('splash').style.display = 'flex';
+        document.getElementById('app').style.display = 'none';
+    }
 });
 
-window.login = () => signInWithRedirect(auth, provider);
+window.googleLogin = () => signInWithPopup(auth, provider);
+window.emailLogin = async () => {
+    const e = document.getElementById('email').value;
+    const p = document.getElementById('pw').value;
+    try { 
+        await signInWithEmailAndPassword(auth, e, p); 
+    } catch { 
+        await createUserWithEmailAndPassword(auth, e, p); 
+    }
+};
 window.logout = () => signOut(auth);
 
-function loadData(isAdmin) {
-  const q = isAdmin 
-    ? query(collection(db, 'transactions'), orderBy('date', 'desc'))
-    : query(collection(db, 'transactions'), where('uid', '==', currentUser.uid), orderBy('date', 'desc'));
+// --- DATA LOGIC ---
+function loadData() {
+    const isAdmin = currentUser.email === ADMIN_EMAIL;
+    // Requirement 2: Admin sees everyone, users see their own
+    const q = isAdmin 
+        ? query(collection(db, 'transactions'), orderBy('date', 'desc'))
+        : query(collection(db, 'transactions'), where('uid', '==', currentUser.uid), orderBy('date', 'desc'));
 
-  onSnapshot(q, (snap) => {
-    txs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    renderAll();
-  });
+    onSnapshot(q, (snap) => {
+        txs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        render();
+    });
 }
 
 const MODAL_DEFS = {
-  income: { title: 'Add Income', fields: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Account</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Category</label><input type="text" id="m-cat" value="Salary"></div><div class="fg"><label>Description</label><input type="text" id="m-desc"></div><div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt"></div>` },
-  expense: { title: 'Add Expense', fields: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>Paid From</label><select id="m-bank">${BOPT}</select></div><div class="fg"><label>Category</label><input type="text" id="m-cat" value="Personal"></div><div class="fg"><label>Description</label><input type="text" id="m-desc"></div><div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt"></div>` },
-  transfer: { title: 'Bank Transfer', fields: `<div class="fg"><label>Date</label><input type="date" id="m-date"></div><div class="fg"><label>From Bank</label><select id="m-bank-from">${BOPT}</select></div><div class="fg"><label>To Bank</label><select id="m-bank-to">${BOPT}</select></div><div class="fg"><label>Description</label><input type="text" id="m-desc" value="Internal Transfer"></div><div class="fg"><label>Amount (PKR)</label><input type="number" id="m-amt"></div>` }
+    income: `
+        <div class="fg"><label>Date</label><input type="date" id="m-date"></div>
+        <div class="fg"><label>Account</label><select id="m-bank">${BOPT}</select></div>
+        <div class="fg"><label>Description</label><input type="text" id="m-desc"></div>
+        <div class="fg"><label>Amount</label><input type="number" id="m-amt"></div>
+    `,
+    transfer: `
+        <div class="fg"><label>Date</label><input type="date" id="m-date"></div>
+        <div class="fg"><label>From Bank</label><select id="m-bank-from">${BOPT}</select></div>
+        <div class="fg"><label>To Bank</label><select id="m-bank-to">${BOPT}</select></div>
+        <div class="fg"><label>Description</label><input type="text" id="m-desc"></div>
+        <div class="fg"><label>Amount</label><input type="number" id="m-amt"></div>
+    `
 };
 
-window.OM = (type) => {
-    currentModal = type;
-    document.getElementById('m-title').innerText = MODAL_DEFS[type].title;
-    document.getElementById('m-body').innerHTML = MODAL_DEFS[type].fields;
-    document.getElementById('m-edit-id').value = '';
-    document.getElementById('m-date').value = new Date().toISOString().split('T')[0];
-    document.getElementById('modal').classList.add('open');
-};
-
-window.CM = () => document.getElementById('modal').classList.remove('open');
-
-window.saveEntry = async () => {
-    const btn = document.getElementById('save-btn');
-    btn.disabled = true; btn.innerText = "Processing...";
-    const editId = document.getElementById('m-edit-id').value;
-    const data = {
-        uid: currentUser.uid,
-        userName: currentUser.displayName,
-        userEmail: currentUser.email,
-        date: document.getElementById('m-date').value,
-        desc: document.getElementById('m-desc').value,
-        amount: parseFloat(document.getElementById('m-amt').value)
-    };
-
-    if(currentModal === 'transfer') {
-        data.type = 'transfer';
-        data.fromBank = document.getElementById('m-bank-from').value;
-        data.toBank = document.getElementById('m-bank-to').value;
-        data.cat = 'Transfer';
-    } else {
-        data.type = currentModal === 'income' ? 'in' : 'out';
-        data.account = document.getElementById('m-bank').value;
-        data.cat = document.getElementById('m-cat').value;
-    }
-
-    try {
-        editId ? await updateDoc(doc(db, 'transactions', editId), data) : await addDoc(collection(db, 'transactions'), data);
-        CM();
-    } catch(e) { alert("Save Error: Check Console."); }
-    btn.disabled = false; btn.innerText = "Confirm & Save";
-};
-
-window.editTx = (id) => {
-    const t = txs.find(x => x.id === id);
-    OM(t.type === 'transfer' ? 'transfer' : (t.type === 'in' ? 'income' : 'expense'));
-    setTimeout(() => {
-        document.getElementById('m-edit-id').value = t.id;
+window.OM = (type, id = null) => {
+    currentType = type;
+    document.getElementById('m-title').innerText = id ? 'Edit Transaction' : 'Add ' + type;
+    document.getElementById('m-body').innerHTML = (type === 'transfer') ? MODAL_DEFS.transfer : MODAL_DEFS.income;
+    document.getElementById('m-id').value = id || '';
+    
+    if (id) {
+        const t = txs.find(x => x.id === id);
         document.getElementById('m-date').value = t.date;
         document.getElementById('m-desc').value = t.desc;
         document.getElementById('m-amt').value = t.amount;
-        if(t.type === 'transfer') {
-            document.getElementById('m-bank-from').value = t.fromBank;
-            document.getElementById('m-bank-to').value = t.toBank;
-        } else {
-            document.getElementById('m-bank').value = t.account;
-            document.getElementById('m-cat').value = t.cat;
-        }
-    }, 50);
+    }
+    document.getElementById('modal').style.display = 'flex';
+};
+
+window.CM = () => document.getElementById('modal').style.display = 'none';
+
+window.saveEntry = async () => {
+    const id = document.getElementById('m-id').value;
+    const data = {
+        uid: currentUser.uid,
+        userEmail: currentUser.email,
+        date: document.getElementById('m-date').value,
+        desc: document.getElementById('m-desc').value,
+        amount: parseFloat(document.getElementById('m-amt').value),
+        type: currentType
+    };
+
+    if (currentType === 'transfer') {
+        data.fromBank = document.getElementById('m-bank-from').value;
+        data.toBank = document.getElementById('m-bank-to').value;
+    } else {
+        data.account = document.getElementById('m-bank').value;
+    }
+
+    if (id) await updateDoc(doc(db, 'transactions', id), data);
+    else await addDoc(collection(db, 'transactions'), data);
+    CM();
 };
 
 window.deleteTx = async (id) => {
-    if(confirm("Delete this transaction forever?")) await deleteDoc(doc(db, 'transactions', id));
+    if (confirm("Delete this transaction?")) await deleteDoc(doc(db, 'transactions', id));
 };
 
-function renderAll() {
-    const balances = { MCB:0, Meezan:0, Faysal:0, Easypaisa:0, Nayapay:0, Sadapay:0, Cash:0 };
-    let inc = 0, exp = 0;
+function render() {
+    const metrics = { inc: 0, exp: 0, balance: 0 };
+    const bankBals = {}; BANKS.forEach(b => bankBals[b] = 0);
 
-    txs.forEach(t => {
-        if(t.type === 'transfer') {
-            balances[t.fromBank] -= t.amount;
-            balances[t.toBank] += t.amount;
+    const list = txs.map(t => {
+        // Requirement 5: Transfer record logic
+        if (t.type === 'transfer') {
+            bankBals[t.fromBank] -= t.amount;
+            bankBals[t.toBank] += t.amount;
         } else {
-            if(balances[t.account] !== undefined) {
-              balances[t.account] += (t.type === 'in' ? 1 : -1) * t.amount;
-              if(t.type === 'in') inc += t.amount; else exp += t.amount;
-            }
+            const isInc = t.type === 'income';
+            metrics[isInc ? 'inc' : 'exp'] += t.amount;
+            bankBals[t.account] += (isInc ? 1 : -1) * t.amount;
         }
-    });
 
-    document.getElementById('metrics').innerHTML = `
-        <div class="m"><div class="ml">Net Income</div><div class="mv" style="color:var(--green)">PKR ${inc.toLocaleString()}</div></div>
-        <div class="m"><div class="ml">Total Spent</div><div class="mv" style="color:var(--red)">PKR ${exp.toLocaleString()}</div></div>
-        ${Object.keys(balances).map(b => `<div class="m"><div class="ml">${b}</div><div class="mv">${balances[b].toLocaleString()}</div></div>`).join('')}
-    `;
-
-    const isAdmin = currentUser.email === ADMIN_EMAIL;
-    const generateRow = t => `
-        <div class="row tx-grid">
-            <span>${t.date.split('-').slice(1).join('/')}</span>
-            <span style="font-size:11px; font-weight:500">${t.desc} ${isAdmin ? `<br><small style="color:var(--primary)">${t.userName}</small>` : ''}</span>
-            <span class="hide-mobile">${t.cat}</span>
-            <span style="color:#94a3b8">${t.type === 'transfer' ? t.fromBank+'→'+t.toBank : t.account}</span>
-            <span style="font-weight:700; color:${t.type==='in'?'var(--green)':'var(--red)'}">${t.amount.toLocaleString()}</span>
-            <div style="display:flex; gap:6px">
-                <button class="edit-btn" onclick="editTx('${t.id}')">Edit</button>
-                <button class="edit-btn" style="color:var(--red)" onclick="deleteTx('${t.id}')">✕</button>
+        return `
+            <div class="row">
+                <span>${t.date.slice(5)}</span>
+                <span style="font-weight:600">${t.desc} ${currentUser.email === ADMIN_EMAIL ? `<br><small style="color:var(--primary)">${t.userEmail}</small>` : ''}</span>
+                <span class="hide-mobile">${t.type === 'transfer' ? t.fromBank+'→'+t.toBank : t.account}</span>
+                <span class="hide-mobile">${t.type}</span>
+                <span style="color: ${t.type === 'income' ? 'var(--green)' : 'var(--red)'}">${t.amount.toLocaleString()}</span>
+                <div class="action-icons">
+                    <button class="icon-btn" onclick="OM('${t.type}', '${t.id}')">✏️</button>
+                    <button class="icon-btn" onclick="deleteTx('${t.id}')">🗑️</button>
+                </div>
             </div>
-        </div>`;
-    
-    document.getElementById('recent-list').innerHTML = txs.slice(0, 15).map(generateRow).join('');
-    document.getElementById('history-list').innerHTML = txs.map(generateRow).join('');
-}
+        `;
+    }).join('');
 
-window.ST = (t, b) => {
-    document.querySelectorAll('.tab').forEach(x => x.style.display = 'none');
-    document.querySelectorAll('.nb').forEach(x => x.classList.remove('active'));
-    document.getElementById('tab-'+t).style.display = 'block';
-    b.classList.add('active');
-};
+    document.getElementById('tx-list').innerHTML = list;
+    document.getElementById('metrics').innerHTML = `
+        <div class="metric-card"><div class="label">Total Income</div><div class="val" style="color:var(--green)">PKR ${metrics.inc.toLocaleString()}</div></div>
+        <div class="metric-card"><div class="label">Total Expenses</div><div class="val" style="color:var(--red)">PKR ${metrics.exp.toLocaleString()}</div></div>
+        <div class="metric-card"><div class="label">Wallet Balance</div><div class="val">PKR ${(metrics.inc - metrics.exp).toLocaleString()}</div></div>
+    `;
+}
 </script>
 </body>
 </html>
